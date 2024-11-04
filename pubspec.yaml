@@ -1,0 +1,34 @@
+name: tiket
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.3
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  assets:
+    - assets/bg_home_wave.jpg
+    - assets/bg_rounded_top.png
+    - assets/ic_profile.png
+    - assets/bg_banner.png
+    - assets/ic_plane.jpg
+    - assets/ic_ship.jpg
+    - assets/ic_train.jpg
+    - assets/ic_ship.png
+    - assets/ic_plane.png
+    - assets/ic_train.png
+    - assets/bg_home_wave.jpg
+    - assets/bg_banner.jpg
+
+
+  uses-material-design: true
