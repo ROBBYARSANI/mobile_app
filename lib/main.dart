@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const LoginScreen(), // Menetapkan LoginScreen sebagai halaman awal
+      debugShowCheckedModeBanner: false,
     );
   }
 }

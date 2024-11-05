@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tiket/register.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginScreen(),
+      home: const LoginScreen(),
     );
   }
 }
@@ -25,7 +26,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE0F7FA),
+      backgroundColor: const Color(0xFFC2E3F7),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -55,7 +56,7 @@ class LoginScreen extends StatelessWidget {
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Username',
+                  'E-mail',
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.black,
@@ -117,13 +118,19 @@ class LoginScreen extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  // Tambahkan navigasi ke halaman pendaftaran jika diperlukan
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SignupScreen(),
+                    ),
+                  );
                 },
                 child: const Text(
                   'Daftar',
                   style: TextStyle(
                     fontSize: 12,
                     color: Color(0xFF00BFFF),
+                    decoration: TextDecoration.underline,
                   ),
                 ),
               ),

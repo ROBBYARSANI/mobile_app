@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tiket/login.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -10,153 +11,186 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'TiketGO Signup',
+      title: 'TiketGO SignUP',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SignupScreen(),
+      home: const SignupScreen(),
     );
   }
 }
 
-class SignupScreen extends StatefulWidget {
+class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});
-
-  @override
-  _SignupScreenState createState() => _SignupScreenState();
-}
-
-class _SignupScreenState extends State<SignupScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    _confirmPasswordController.dispose();
-    super.dispose();
-  }
-
-  void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      // Implementasi sistem register di sini
-      print('Email: ${_emailController.text}');
-      print('Password: ${_passwordController.text}');
-      // Biasanya, data dikirim ke backend untuk proses register
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('TiketGO Signup'),
-        backgroundColor: Colors.lightBlueAccent,
-        elevation: 0,
-      ),
-      body: SingleChildScrollView(
+      backgroundColor: const Color(0xFFC2E3F7),
+      body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                // Gambar header
-                Image.asset(
-                  'assets/images/tiketgo.png',
-                  height: 150,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Gambar Header
+              Image.asset(
+                'assets/tiketgo.png',
+                width: 200,
+                height: 150,
+                fit: BoxFit.contain,
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'Selamat Datang di TiketGo',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Color.fromARGB(255, 0, 103, 177),
                 ),
-                const SizedBox(height: 20),
-                // Judul dan subtitle
-                const Center(
-                  child: Column(
-                    children: [
-                      Text(
-                        "Welcome to TiketGO",
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue),
-                      ),
-                      Text(
-                        "Silahkan Daftar",
-                        style: TextStyle(fontSize: 16, color: Colors.blueGrey),
-                      ),
-                    ],
+              ),
+              const SizedBox(height: 16),
+              // Input Email
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'E-mail',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black,
                   ),
                 ),
-                const SizedBox(height: 20),
-                // Input email
-                TextFormField(
-                  controller: _emailController,
-                  decoration: const InputDecoration(
-                    labelText: 'Masukkan Email',
-                    border: OutlineInputBorder(),
+              ),
+              const SizedBox(height: 4),
+              TextField(
+                decoration: InputDecoration(
+                  hintText: 'Masukkan Email',
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide.none,
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Email harus diisi';
-                    }
-                    if (!value.contains('@')) {
-                      return 'Masukkan email yang valid';
-                    }
-                    return null;
-                  },
+                  contentPadding: const EdgeInsets.all(12),
+                  hintStyle: const TextStyle(color: Color(0xFFBDBDBD)),
                 ),
-                const SizedBox(height: 16),
-                // Input password
-                TextFormField(
-                  controller: _passwordController,
-                  decoration: const InputDecoration(
-                    labelText: 'Masukkan Password',
-                    border: OutlineInputBorder(),
+                keyboardType: TextInputType.emailAddress,
+                style: const TextStyle(color: Colors.black),
+              ),
+              const SizedBox(height: 16),
+              // Input NIK
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'NIK',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black,
                   ),
-                  obscureText: true,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Password harus diisi';
-                    }
-                    if (value.length < 6) {
-                      return 'Password minimal 6 karakter';
-                    }
-                    return null;
-                  },
                 ),
-                const SizedBox(height: 16),
-                // Konfirmasi password
-                TextFormField(
-                  controller: _confirmPasswordController,
-                  decoration: const InputDecoration(
-                    labelText: 'Konfirmasi Password',
-                    border: OutlineInputBorder(),
+              ),
+              const SizedBox(height: 4),
+              TextField(
+                decoration: InputDecoration(
+                  hintText: 'Masukkan NIK',
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide.none,
                   ),
-                  obscureText: true,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Konfirmasi password harus diisi';
-                    }
-                    if (value != _passwordController.text) {
-                      return 'Password tidak cocok';
-                    }
-                    return null;
-                  },
+                  contentPadding: const EdgeInsets.all(12),
+                  hintStyle: const TextStyle(color: Color(0xFFBDBDBD)),
                 ),
-                const SizedBox(height: 24),
-                // Tombol Daftar
-                ElevatedButton(
-                  onPressed: _submitForm,
+                keyboardType: TextInputType.number,
+                style: const TextStyle(color: Colors.black),
+              ),
+              const SizedBox(height: 16),
+              // Input Password
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Password',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 4),
+              TextField(
+                decoration: InputDecoration(
+                  hintText: 'Masukkan kata sandi baru',
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide.none,
+                  ),
+                  contentPadding: const EdgeInsets.all(12),
+                  hintStyle: const TextStyle(color: Color(0xFFBDBDBD)),
+                ),
+                obscureText: true,
+                style: const TextStyle(color: Colors.black),
+              ),
+              const SizedBox(height: 16),
+              // Konfirmasi Password
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Konfirmasi Password',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 4),
+              TextField(
+                decoration: InputDecoration(
+                  hintText: 'Tulis ulang kata sandi',
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide.none,
+                  ),
+                  contentPadding: const EdgeInsets.all(12),
+                  hintStyle: const TextStyle(color: Color(0xFFBDBDBD)),
+                ),
+                obscureText: true,
+                style: const TextStyle(color: Colors.black),
+              ),
+              const SizedBox(height: 16),
+              // Tombol Daftar
+
+              const SizedBox(height: 8),
+
+              //loginscreen
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueAccent,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    backgroundColor: const Color(0xFF00BFFF),
+                    padding: const EdgeInsets.all(12),
+                    textStyle: const TextStyle(fontFamily: 'sans-serif-medium'),
                   ),
-                  child: Text('Buat Akun'),
+                  onPressed: () {
+                    // kodingan daftar
+                    // Setelah berhasil, arahkan ke LoginScreen
+
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen()),
+                    );
+                  },
+                  child: const Text(
+                    'Daftar',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
