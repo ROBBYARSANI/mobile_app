@@ -83,44 +83,6 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 130, 183, 202)
-                        .withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  height: 50,
-                  child: const Row(
-                    children: [
-                      Icon(Icons.search, color: Colors.white),
-                      SizedBox(width: 10),
-                      Text(
-                        "Kamu mau pergi kemana?",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Card(
-                  margin: const EdgeInsets.all(10),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  elevation: 5,
-                  child: Image.asset(
-                    'assets/bg_banner.png',
-                    height: 180,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-                ),
                 const Padding(
                   padding: EdgeInsets.only(left: 20),
                   child: Align(
