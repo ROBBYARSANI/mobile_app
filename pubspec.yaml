@@ -17,18 +17,6 @@ dev_dependencies:
 
 flutter:
   assets:
-    - assets/bg_home_wave.jpg
-    - assets/bg_rounded_top.png
-    - assets/ic_profile.png
-    - assets/bg_banner.png
-    - assets/ic_plane.jpg
-    - assets/ic_ship.jpg
-    - assets/ic_train.jpg
-    - assets/ic_ship.png
-    - assets/ic_plane.png
-    - assets/ic_train.png
-    - assets/bg_home_wave.jpg
-    - assets/bg_banner.jpg
-
+    - assets/
 
   uses-material-design: true

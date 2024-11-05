@@ -67,7 +67,7 @@ class _SignupScreenState extends State<SignupScreen> {
               children: <Widget>[
                 // Gambar header
                 Image.asset(
-                  'assets/images/signup_image.png',
+                  'assets/images/tiketgo.png',
                   height: 150,
                 ),
                 const SizedBox(height: 20),
