@@ -1,12 +1,36 @@
 import 'package:flutter/material.dart';
 
-class TicketBookingScreen extends StatelessWidget {
-  const TicketBookingScreen({super.key});
+class kapalpage extends StatefulWidget {
+  const kapalpage({super.key});
+
+  @override
+  State<kapalpage> createState() => _kapalpagestate();
+}
+
+class _kapalpagestate extends State<kapalpage> {
+  int jumlahAnak = 0;
+  int jumlahDewasa = 0;
+  DateTime? tanggalBerangkat;
+
+  // Fungsi untuk memilih tanggal
+  Future<void> pilihTanggal(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != tanggalBerangkat) {
+      setState(() {
+        tanggalBerangkat = picked;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFC2E3F7),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -38,8 +62,7 @@ class TicketBookingScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                      color:
-                          Colors.blue, // Sesuaikan warna dengan primary color
+                      color: Colors.blue,
                       padding: const EdgeInsets.all(10),
                       child: const Row(
                         children: [
@@ -60,7 +83,6 @@ class TicketBookingScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Nama Penumpang
                           const Text("Nama Penumpang",
                               style: TextStyle(fontSize: 14)),
                           const TextField(
@@ -70,7 +92,7 @@ class TicketBookingScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 20),
 
-                          // Keberangkatan dan Tujuan
+                          // TUJUAN
                           Row(
                             children: [
                               Expanded(
@@ -80,7 +102,7 @@ class TicketBookingScreen extends StatelessWidget {
                                     const Text("Keberangkatan",
                                         style: TextStyle(fontSize: 14)),
                                     DropdownButtonFormField<String>(
-                                      items: ["Jakarta", "Bandung"]
+                                      items: ["Surabaya", "Bali"]
                                           .map((String value) {
                                         return DropdownMenuItem<String>(
                                           value: value,
@@ -125,7 +147,7 @@ class TicketBookingScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 20),
 
-                          // Jumlah Anak-anak
+                          // JUMLAH PESAN TIKET
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -136,14 +158,22 @@ class TicketBookingScreen extends StatelessWidget {
                                   IconButton(
                                     icon: const Icon(Icons.remove,
                                         color: Colors.blue),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      setState(() {
+                                        if (jumlahAnak > 0) jumlahAnak--;
+                                      });
+                                    },
                                   ),
-                                  const Text("0",
-                                      style: TextStyle(fontSize: 16)),
+                                  Text("$jumlahAnak",
+                                      style: const TextStyle(fontSize: 16)),
                                   IconButton(
                                     icon: const Icon(Icons.add,
                                         color: Colors.blue),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      setState(() {
+                                        if (jumlahAnak < 5) jumlahAnak++;
+                                      });
+                                    },
                                   ),
                                 ],
                               ),
@@ -151,7 +181,6 @@ class TicketBookingScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 20),
 
-                          // Jumlah Dewasa
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -162,14 +191,22 @@ class TicketBookingScreen extends StatelessWidget {
                                   IconButton(
                                     icon: const Icon(Icons.remove,
                                         color: Colors.blue),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      setState(() {
+                                        if (jumlahDewasa > 0) jumlahDewasa--;
+                                      });
+                                    },
                                   ),
-                                  const Text("0",
-                                      style: TextStyle(fontSize: 16)),
+                                  Text("$jumlahDewasa",
+                                      style: const TextStyle(fontSize: 16)),
                                   IconButton(
                                     icon: const Icon(Icons.add,
                                         color: Colors.blue),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      setState(() {
+                                        if (jumlahDewasa < 5) jumlahDewasa++;
+                                      });
+                                    },
                                   ),
                                 ],
                               ),
@@ -177,7 +214,7 @@ class TicketBookingScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 20),
 
-                          // Tipe / Kelas
+                          // KELAS KURSI
                           const Text("Tipe / Kelas",
                               style: TextStyle(fontSize: 14)),
                           DropdownButtonFormField<String>(
@@ -195,18 +232,23 @@ class TicketBookingScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 20),
 
-                          // Tanggal Berangkat
+                          // TANGGAL
                           const Text("Tanggal Berangkat",
                               style: TextStyle(fontSize: 14)),
-                          const TextField(
+                          TextField(
+                            onTap: () async {
+                              await pilihTanggal(context);
+                            },
+                            readOnly: true,
                             decoration: InputDecoration(
-                              hintText: "Masukan tanggal",
-                              border: OutlineInputBorder(),
+                              hintText: tanggalBerangkat != null
+                                  ? "${tanggalBerangkat!.day}/${tanggalBerangkat!.month}/${tanggalBerangkat!.year}"
+                                  : "Masukan tanggal",
+                              border: const OutlineInputBorder(),
                             ),
                           ),
                           const SizedBox(height: 20),
 
-                          // Nomor Telp / HP
                           const Text("Nomor Telp / HP",
                               style: TextStyle(fontSize: 14)),
                           const TextField(
@@ -223,22 +265,21 @@ class TicketBookingScreen extends StatelessWidget {
                 ),
               ),
 
-              // Button Checkout
+              //CO
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          Colors.blue, // Sesuaikan warna primary color
+                      backgroundColor: Colors.blue,
                       padding: const EdgeInsets.symmetric(vertical: 15.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50.0),
                       ),
                     ),
                     onPressed: () {
-                      // Aksi ketika tombol ditekan
+                      //QWERTYUIO
                     },
                     child: const Text(
                       "Pesan",

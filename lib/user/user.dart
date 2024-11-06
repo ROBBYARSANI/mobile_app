@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tiket/user/kapal/inputdata.dart';
+import 'package:tiket/user/kereta/inputdata.dart';
+import 'package:tiket/user/pesawat/inputdata.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,7 +41,7 @@ class HomeScreen extends StatelessWidget {
             child: Container(
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/bg_banner.png'),
+                  image: AssetImage('assets/bg_home_wave.jpg'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -85,7 +88,8 @@ class HomeScreen extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.3),
+                    color: const Color.fromARGB(168, 107, 207, 237)
+                        .withOpacity(0.3),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   height: 50,
@@ -140,18 +144,21 @@ class HomeScreen extends StatelessWidget {
                         'Pesawat',
                         'Transportasi Udara',
                         'assets/ic_plane.png',
+                        const pesawatpage(),
                       ),
                       transportCard(
                         context,
                         'Kapal Laut',
                         'Transportasi Laut',
                         'assets/ic_ship.png',
+                        const kapalpage(),
                       ),
                       transportCard(
                         context,
                         'Kereta',
                         'Transportasi Darat',
                         'assets/ic_train.png',
+                        const keretapage(),
                       ),
                     ],
                   ),
@@ -164,68 +171,76 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget transportCard(
-      BuildContext context, String title, String subtitle, String iconPath) {
-    return Card(
-      margin: const EdgeInsets.all(10),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      elevation: 5,
-      child: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/bg_rounded_top.png'),
-            fit: BoxFit.cover,
-          ),
+  Widget transportCard(BuildContext context, String title, String subtitle,
+      String iconPath, Widget page) {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => page),
+        );
+      },
+      child: Card(
+        margin: const EdgeInsets.all(10),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
         ),
-        height: 150,
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 20, top: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const Spacer(),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.7),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Text(
-                      subtitle,
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 12,
+        elevation: 5,
+        child: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/bg_rounded_top.png'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          height: 150,
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20, top: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 30,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                ],
+                    const Spacer(),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 6, horizontal: 10),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.7),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Text(
+                        subtitle,
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                  ],
+                ),
               ),
-            ),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.all(15),
-              child: Image.asset(
-                iconPath,
-                color: Colors.white,
-                width: 100,
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.all(15),
+                child: Image.asset(
+                  iconPath,
+                  color: Colors.white,
+                  width: 100,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
