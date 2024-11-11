@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:tiket/user/user.dart';
 import 'package:tiket/util/config/config.dart';
 import 'package:tiket/register.dart'; // Ganti dengan path yang sesuai jika perlu
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+=======
+import 'package:tiket/register.dart';
+>>>>>>> dbc4b8a1ba88bdd1257d582173887322536163c0
 
 void main() {
   runApp(const MyApp());
@@ -24,6 +28,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+<<<<<<< HEAD
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -79,6 +84,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
+=======
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
+
+  @override
+>>>>>>> dbc4b8a1ba88bdd1257d582173887322536163c0
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFC2E3F7),
@@ -96,6 +107,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 fit: BoxFit.contain,
               ),
               const SizedBox(height: 16),
+<<<<<<< HEAD
+=======
+              // Logo dan Text
+
+              const SizedBox(height: 8),
+>>>>>>> dbc4b8a1ba88bdd1257d582173887322536163c0
               const Text(
                 'Welcome to TiketGO',
                 style: TextStyle(
@@ -104,17 +121,31 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               const SizedBox(height: 16),
+<<<<<<< HEAD
               // Input Email
+=======
+              // Input Username
+>>>>>>> dbc4b8a1ba88bdd1257d582173887322536163c0
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'E-mail',
+<<<<<<< HEAD
                   style: TextStyle(fontSize: 14, color: Colors.black),
+=======
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black,
+                  ),
+>>>>>>> dbc4b8a1ba88bdd1257d582173887322536163c0
                 ),
               ),
               const SizedBox(height: 4),
               TextField(
+<<<<<<< HEAD
                 controller: _emailController,
+=======
+>>>>>>> dbc4b8a1ba88bdd1257d582173887322536163c0
                 decoration: InputDecoration(
                   hintText: 'Masukkan Email',
                   filled: true,
@@ -135,12 +166,22 @@ class _LoginScreenState extends State<LoginScreen> {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Password',
+<<<<<<< HEAD
                   style: TextStyle(fontSize: 14, color: Colors.black),
+=======
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black,
+                  ),
+>>>>>>> dbc4b8a1ba88bdd1257d582173887322536163c0
                 ),
               ),
               const SizedBox(height: 4),
               TextField(
+<<<<<<< HEAD
                 controller: _passwordController,
+=======
+>>>>>>> dbc4b8a1ba88bdd1257d582173887322536163c0
                 decoration: InputDecoration(
                   hintText: 'Masukkan Password',
                   filled: true,
@@ -159,7 +200,14 @@ class _LoginScreenState extends State<LoginScreen> {
               // Teks Daftar
               const Text(
                 'Belum punya akun?',
+<<<<<<< HEAD
                 style: TextStyle(fontSize: 12, color: Colors.black),
+=======
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.black,
+                ),
+>>>>>>> dbc4b8a1ba88bdd1257d582173887322536163c0
               ),
               GestureDetector(
                 onTap: () {
@@ -189,7 +237,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.all(12),
                     textStyle: const TextStyle(fontFamily: 'sans-serif-medium'),
                   ),
+<<<<<<< HEAD
                   onPressed: _loginUser,
+=======
+                  onPressed: () {
+                    // Tambah login
+                  },
+>>>>>>> dbc4b8a1ba88bdd1257d582173887322536163c0
                   child: const Text(
                     'Masuk',
                     style: TextStyle(color: Colors.white),
@@ -203,6 +257,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+<<<<<<< HEAD
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -215,3 +270,5 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+=======
+>>>>>>> dbc4b8a1ba88bdd1257d582173887322536163c0

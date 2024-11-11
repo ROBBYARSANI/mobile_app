@@ -1,7 +1,11 @@
+<<<<<<< HEAD
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:tiket/util/config/config.dart';
 import 'package:http/http.dart' as http;
+=======
+import 'package:flutter/material.dart';
+>>>>>>> dbc4b8a1ba88bdd1257d582173887322536163c0
 import 'package:tiket/login.dart';
 
 void main() {
@@ -23,6 +27,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+<<<<<<< HEAD
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
 
@@ -88,6 +93,12 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   @override
+=======
+class SignupScreen extends StatelessWidget {
+  const SignupScreen({super.key});
+
+  @override
+>>>>>>> dbc4b8a1ba88bdd1257d582173887322536163c0
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFC2E3F7),
@@ -126,7 +137,10 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               const SizedBox(height: 4),
               TextField(
+<<<<<<< HEAD
                 controller: _emailController,
+=======
+>>>>>>> dbc4b8a1ba88bdd1257d582173887322536163c0
                 decoration: InputDecoration(
                   hintText: 'Masukkan Email',
                   filled: true,
@@ -155,7 +169,10 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               const SizedBox(height: 4),
               TextField(
+<<<<<<< HEAD
                 controller: _nikController,
+=======
+>>>>>>> dbc4b8a1ba88bdd1257d582173887322536163c0
                 decoration: InputDecoration(
                   hintText: 'Masukkan NIK',
                   filled: true,
@@ -184,7 +201,10 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               const SizedBox(height: 4),
               TextField(
+<<<<<<< HEAD
                 controller: _passwordController,
+=======
+>>>>>>> dbc4b8a1ba88bdd1257d582173887322536163c0
                 decoration: InputDecoration(
                   hintText: 'Masukkan kata sandi baru',
                   filled: true,
@@ -213,7 +233,10 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               const SizedBox(height: 4),
               TextField(
+<<<<<<< HEAD
                 controller: _confirmPasswordController,
+=======
+>>>>>>> dbc4b8a1ba88bdd1257d582173887322536163c0
                 decoration: InputDecoration(
                   hintText: 'Tulis ulang kata sandi',
                   filled: true,
@@ -230,6 +253,13 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               const SizedBox(height: 16),
               // Tombol Daftar
+<<<<<<< HEAD
+=======
+
+              const SizedBox(height: 8),
+
+              //loginscreen
+>>>>>>> dbc4b8a1ba88bdd1257d582173887322536163c0
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -238,7 +268,20 @@ class _SignupScreenState extends State<SignupScreen> {
                     padding: const EdgeInsets.all(12),
                     textStyle: const TextStyle(fontFamily: 'sans-serif-medium'),
                   ),
+<<<<<<< HEAD
                   onPressed: _registerUser,
+=======
+                  onPressed: () {
+                    // kodingan daftar
+                    // Setelah berhasil, arahkan ke Login
+
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen()),
+                    );
+                  },
+>>>>>>> dbc4b8a1ba88bdd1257d582173887322536163c0
                   child: const Text(
                     'Daftar',
                     style: TextStyle(color: Colors.white),
