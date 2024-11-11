@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }
@@ -43,7 +43,7 @@ class HomePage extends StatelessWidget {
           itemCount: 10,
           padding: const EdgeInsets.only(top: 8, bottom: 8),
           itemBuilder: (context, index) {
-            return TicketView();
+            return const TicketView();
           }),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class JadwalPage extends StatelessWidget {
   const JadwalPage({super.key});
@@ -43,7 +44,7 @@ class JadwalPage extends StatelessWidget {
                       padding: const EdgeInsets.all(10),
                       child: const Row(
                         children: [
-                          Icon(Icons.co_present, color: Colors.white),
+                          Icon(Icons.upload, color: Colors.white),
                           SizedBox(width: 20),
                           Expanded(
                             child: Text(
@@ -143,30 +144,30 @@ class JadwalPage extends StatelessWidget {
                           const SizedBox(height: 20),
 
                           // stok tiket
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text("Jumlah tiket tersedia",
-                                  style: TextStyle(fontSize: 14)),
-                              Row(
-                                children: [
-                                  IconButton(
-                                    icon: const Icon(Icons.remove,
-                                        color: Colors.blue),
-                                    onPressed: () {},
-                                  ),
-                                  const Text("0",
-                                      style: TextStyle(fontSize: 16)),
-                                  IconButton(
-                                    icon: const Icon(Icons.add,
-                                        color: Colors.blue),
-                                    onPressed: () {},
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 20),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //   children: [
+                          //     const Text("Jumlah tiket tersedia",
+                          //         style: TextStyle(fontSize: 14)),
+                          //     Row(
+                          //       children: [
+                          //         IconButton(
+                          //           icon: const Icon(Icons.remove,
+                          //               color: Colors.blue),
+                          //           onPressed: () {},
+                          //         ),
+                          //         const Text("0",
+                          //             style: TextStyle(fontSize: 16)),
+                          //         IconButton(
+                          //           icon: const Icon(Icons.add,
+                          //               color: Colors.blue),
+                          //           onPressed: () {},
+                          //         ),
+                          //       ],
+                          //     ),
+                          //   ],
+                          // ),
+                          //const SizedBox(height: 20),
 
                           // Tipe / Kelas
                           const Text("Tipe / Kelas",
@@ -186,12 +187,29 @@ class JadwalPage extends StatelessWidget {
                           ),
                           const SizedBox(height: 20),
 
+                          //input jumlah tiket
+                          const Text(
+                            "Jumlah Tiket Tersedia",
+                            style: TextStyle(fontSize: 14),
+                          ),
+                          TextField(
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                            ],
+                            decoration: const InputDecoration(
+                              hintText: "Masukan jumlah tiket tersedia",
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+
                           // Tanggal Berangkat
-                          const Text("Tanggal Berangkat",
+                          const Text("Tanggal Tersedia",
                               style: TextStyle(fontSize: 14)),
                           const TextField(
                             decoration: InputDecoration(
-                              hintText: "Masukan tanggal",
+                              hintText: "Masukan tanggal tiket tersedia",
                               border: OutlineInputBorder(),
                             ),
                           ),
@@ -214,7 +232,7 @@ class JadwalPage extends StatelessWidget {
                 ),
               ),
 
-              // Button Checkout
+              // Button update
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: SizedBox(
@@ -232,7 +250,7 @@ class JadwalPage extends StatelessWidget {
                       // Aksi ketika tombol ditekan
                     },
                     child: const Text(
-                      "Pesan",
+                      "Update",
                       style: TextStyle(
                           fontSize: 16,
                           color: Colors.white,
