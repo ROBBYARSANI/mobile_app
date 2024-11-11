@@ -145,7 +145,7 @@ class LoginScreen extends StatelessWidget {
                     textStyle: const TextStyle(fontFamily: 'sans-serif-medium'),
                   ),
                   onPressed: () {
-                    // Tambahkan aksi login jika diperlukan
+                    // Tambah login
                   },
                   child: const Text(
                     'Masuk',

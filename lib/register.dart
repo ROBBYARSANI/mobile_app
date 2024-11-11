@@ -176,7 +176,7 @@ class SignupScreen extends StatelessWidget {
                   ),
                   onPressed: () {
                     // kodingan daftar
-                    // Setelah berhasil, arahkan ke LoginScreen
+                    // Setelah berhasil, arahkan ke Login
 
                     Navigator.pushReplacement(
                       context,

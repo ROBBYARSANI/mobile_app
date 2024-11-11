@@ -77,7 +77,7 @@ class HomeScreen extends StatelessWidget {
                         ],
                       ),
                       CircleAvatar(
-                        backgroundImage: AssetImage('assets/ic_profile.png'),
+                        backgroundImage: AssetImage('assets/tiketgo.png'),
                         radius: 25,
                       ),
                     ],
