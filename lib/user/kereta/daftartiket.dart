@@ -5,6 +5,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,13 +24,15 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 78, 158, 222),
-        title: Text(
-          "Keberangkatan - Tujuan",
+        title: const Text(
+          "Surabaya - Solo",
           style: TextStyle(
               color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
         ),
@@ -37,7 +41,7 @@ class HomePage extends StatelessWidget {
       backgroundColor: const Color(0xFFC2E3F7),
       body: ListView.builder(
           itemCount: 10,
-          padding: EdgeInsets.only(top: 8, bottom: 8),
+          padding: const EdgeInsets.only(top: 8, bottom: 8),
           itemBuilder: (context, index) {
             return TicketView();
           }),
@@ -46,16 +50,18 @@ class HomePage extends StatelessWidget {
 }
 
 class TicketView extends StatelessWidget {
+  const TicketView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Container(
-            padding: EdgeInsets.all(16),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.all(16),
+            decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(24),
@@ -64,18 +70,18 @@ class TicketView extends StatelessWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    Text(
+                    const Text(
                       "SBY",
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.indigo),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 16,
                     ),
                     Container(
-                      padding: EdgeInsets.all(6),
+                      padding: const EdgeInsets.all(6),
                       decoration: BoxDecoration(
                           color: Colors.indigo.shade50,
                           borderRadius: BorderRadius.circular(20)),
@@ -99,6 +105,10 @@ class TicketView extends StatelessWidget {
                               child: LayoutBuilder(
                                 builder: (context, constraints) {
                                   return Flex(
+                                    direction: Axis.horizontal,
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: List.generate(
                                         (constraints.constrainWidth() / 6)
                                             .floor(),
@@ -111,10 +121,6 @@ class TicketView extends StatelessWidget {
                                                         Colors.grey.shade300),
                                               ),
                                             )),
-                                    direction: Axis.horizontal,
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
                                   );
                                 },
                               ),
@@ -131,7 +137,7 @@ class TicketView extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.all(6),
+                      padding: const EdgeInsets.all(6),
                       decoration: BoxDecoration(
                           color: Colors.pink.shade50,
                           borderRadius: BorderRadius.circular(20)),
@@ -145,10 +151,10 @@ class TicketView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 16,
                     ),
-                    Text(
+                    const Text(
                       "SOL",
                       style: TextStyle(
                           fontSize: 18,
@@ -157,10 +163,10 @@ class TicketView extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     SizedBox(
@@ -185,10 +191,10 @@ class TicketView extends StatelessWidget {
                         )),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
@@ -207,8 +213,8 @@ class TicketView extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 12),
-                Row(
+                const SizedBox(height: 12),
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
@@ -232,7 +238,7 @@ class TicketView extends StatelessWidget {
                   width: 10,
                   child: DecoratedBox(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                             topRight: Radius.circular(10),
                             bottomRight: Radius.circular(10)),
                         color: Colors.grey.shade200),
@@ -244,6 +250,9 @@ class TicketView extends StatelessWidget {
                     child: LayoutBuilder(
                       builder: (context, constraints) {
                         return Flex(
+                          direction: Axis.horizontal,
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: List.generate(
                               (constraints.constrainWidth() / 10).floor(),
                               (index) => SizedBox(
@@ -254,9 +263,6 @@ class TicketView extends StatelessWidget {
                                           color: Colors.grey.shade400),
                                     ),
                                   )),
-                          direction: Axis.horizontal,
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         );
                       },
                     ),
@@ -267,7 +273,7 @@ class TicketView extends StatelessWidget {
                   width: 10,
                   child: DecoratedBox(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(10),
                             bottomLeft: Radius.circular(10)),
                         color: Colors.grey.shade200),
@@ -277,13 +283,13 @@ class TicketView extends StatelessWidget {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(left: 16, right: 16, bottom: 12),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 12),
+            decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(24),
                     bottomRight: Radius.circular(24))),
-            child: Row(
+            child: const Row(
               children: <Widget>[
                 SizedBox(
                   width: 16,

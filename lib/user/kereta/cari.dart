@@ -1,16 +1,31 @@
 import 'package:flutter/material.dart';
 
-class datakereta extends StatefulWidget {
-  const datakereta({super.key});
+class keretapage extends StatefulWidget {
+  const keretapage({super.key});
 
   @override
-  State<datakereta> createState() => _datakeretapagestate();
+  State<keretapage> createState() => _keretapagestate();
 }
 
-class _datakeretapagestate extends State<datakereta> {
+class _keretapagestate extends State<keretapage> {
   int jumlahAnak = 0;
   int jumlahDewasa = 0;
   DateTime? tanggalBerangkat;
+
+  // Fungsi untuk memilih tanggal
+  Future<void> pilihTanggal(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != tanggalBerangkat) {
+      setState(() {
+        tanggalBerangkat = picked;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +39,7 @@ class _datakeretapagestate extends State<datakereta> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: const Text(
-          'Pesan Tiket',
+          'Cari Kereta',
           style: TextStyle(
             color: Colors.black,
             fontSize: 20,
@@ -51,11 +66,10 @@ class _datakeretapagestate extends State<datakereta> {
                       padding: const EdgeInsets.all(10),
                       child: const Row(
                         children: [
-                          Icon(Icons.co_present, color: Colors.white),
                           SizedBox(width: 20),
                           Expanded(
                             child: Text(
-                              "Mohon isi data dibawah ini sesuai dengan KTP Anda",
+                              "Ingin Pergi Kemana?",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 18),
                             ),
@@ -68,23 +82,6 @@ class _datakeretapagestate extends State<datakereta> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text("Nama Penumpang",
-                              style: TextStyle(fontSize: 14)),
-                          const TextField(
-                            decoration: InputDecoration(
-                              hintText: "Masukan nama lengkap",
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-
-                          const Text("NIK", style: TextStyle(fontSize: 14)),
-                          const TextField(
-                            decoration: InputDecoration(
-                              hintText: "Masukan NIK Sesuai dengan KTP",
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-
                           // TUJUAN
                           Row(
                             children: [
@@ -140,15 +137,107 @@ class _datakeretapagestate extends State<datakereta> {
                           ),
                           const SizedBox(height: 20),
 
-                          const Text("Nomor Telp / HP",
+                          // JUMLAH PESAN TIKET
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text("Anak-anak (>5 tahun)",
+                                  style: TextStyle(fontSize: 14)),
+                              Row(
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(Icons.remove,
+                                        color: Colors.blue),
+                                    onPressed: () {
+                                      setState(() {
+                                        if (jumlahAnak > 0) jumlahAnak--;
+                                      });
+                                    },
+                                  ),
+                                  Text("$jumlahAnak",
+                                      style: const TextStyle(fontSize: 16)),
+                                  IconButton(
+                                    icon: const Icon(Icons.add,
+                                        color: Colors.blue),
+                                    onPressed: () {
+                                      setState(() {
+                                        if (jumlahAnak < 5) jumlahAnak++;
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text("Dewasa",
+                                  style: TextStyle(fontSize: 14)),
+                              Row(
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(Icons.remove,
+                                        color: Colors.blue),
+                                    onPressed: () {
+                                      setState(() {
+                                        if (jumlahDewasa > 0) jumlahDewasa--;
+                                      });
+                                    },
+                                  ),
+                                  Text("$jumlahDewasa",
+                                      style: const TextStyle(fontSize: 16)),
+                                  IconButton(
+                                    icon: const Icon(Icons.add,
+                                        color: Colors.blue),
+                                    onPressed: () {
+                                      setState(() {
+                                        if (jumlahDewasa < 5) jumlahDewasa++;
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+
+                          // KELAS KURSI
+                          const Text("Tipe / Kelas",
                               style: TextStyle(fontSize: 14)),
-                          const TextField(
-                            decoration: InputDecoration(
-                              hintText: "Masukan nomor telepon",
+                          DropdownButtonFormField<String>(
+                            items: ["Ekonomi", "Bisnis", "Eksekutif"]
+                                .map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (value) {},
+                            decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                             ),
-                            keyboardType: TextInputType.phone,
                           ),
+                          const SizedBox(height: 20),
+
+                          // Tanggal
+                          const Text("Tanggal Berangkat",
+                              style: TextStyle(fontSize: 14)),
+                          TextField(
+                            onTap: () async {
+                              await pilihTanggal(context);
+                            },
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              hintText: tanggalBerangkat != null
+                                  ? "${tanggalBerangkat!.day}/${tanggalBerangkat!.month}/${tanggalBerangkat!.year}"
+                                  : "Masukan tanggal",
+                              border: const OutlineInputBorder(),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
                         ],
                       ),
                     ),
@@ -173,7 +262,7 @@ class _datakeretapagestate extends State<datakereta> {
                       //QWERTYUIO
                     },
                     child: const Text(
-                      "Pesan",
+                      "Cari",
                       style: TextStyle(
                           fontSize: 16,
                           color: Colors.white,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tiket/user/kapal/inputdata.dart';
-import 'package:tiket/user/kereta/inputdata.dart';
+import 'package:tiket/user/kereta/cari.dart';
 import 'package:tiket/user/pesawat/inputdata.dart';
 
 void main() {
