@@ -10,10 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
   get: ^4.6.5
-<<<<<<< HEAD
   http: ^1.2.2 
-=======
->>>>>>> dbc4b8a1ba88bdd1257d582173887322536163c0
+  shared_preferences: ^2.0.18 
 
 dev_dependencies:
   flutter_test:
