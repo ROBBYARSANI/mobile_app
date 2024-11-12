@@ -13,9 +13,6 @@ class MyApp extends StatelessWidget {
       title: 'Tiket',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: const HomePage(),
@@ -25,6 +22,70 @@ class MyApp extends StatelessWidget {
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
+
+  void _showFilterOptions(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
+            const Text(
+              "Filter",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const Divider(),
+            CheckboxListTile(
+              title: const Text("Lion Air"),
+              value: false,
+              onChanged: (bool? value) {},
+            ),
+            CheckboxListTile(
+              title: const Text("Garuda"),
+              value: false,
+              onChanged: (bool? value) {},
+            ),
+            CheckboxListTile(
+              title: const Text("Air Asia"),
+              value: false,
+              onChanged: (bool? value) {},
+            ),
+            CheckboxListTile(
+              title: const Text("Garuda"),
+              value: false,
+              onChanged: (bool? value) {},
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showSortOptions(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
+            const Text(
+              "Urutkan",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const Divider(),
+            ListTile(
+              title: const Text("Harga"),
+              onTap: () {},
+            ),
+            ListTile(
+              title: const Text("Waktu"),
+              onTap: () {},
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +100,36 @@ class HomePage extends StatelessWidget {
         elevation: 1,
       ),
       backgroundColor: const Color(0xFFC2E3F7),
-      body: ListView.builder(
-          itemCount: 10,
-          padding: const EdgeInsets.only(top: 8, bottom: 8),
-          itemBuilder: (context, index) {
-            return const TicketView();
-          }),
+      body: Stack(
+        children: [
+          ListView.builder(
+            itemCount: 10,
+            padding: const EdgeInsets.only(top: 8, bottom: 8),
+            itemBuilder: (context, index) {
+              return const TicketView();
+            },
+          ),
+          Positioned(
+            bottom: 20,
+            right: 20,
+            child: Column(
+              children: [
+                FloatingActionButton.extended(
+                  onPressed: () => _showFilterOptions(context),
+                  label: const Text("Filter"),
+                  icon: const Icon(Icons.filter_list),
+                ),
+                const SizedBox(height: 10),
+                FloatingActionButton.extended(
+                  onPressed: () => _showSortOptions(context),
+                  label: const Text("Urut"),
+                  icon: const Icon(Icons.sort),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -77,9 +162,7 @@ class TicketView extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: Colors.indigo),
                     ),
-                    const SizedBox(
-                      width: 16,
-                    ),
+                    const SizedBox(width: 16),
                     Container(
                       padding: const EdgeInsets.all(6),
                       decoration: BoxDecoration(
@@ -151,9 +234,7 @@ class TicketView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      width: 16,
-                    ),
+                    const SizedBox(width: 16),
                     const Text(
                       "SOL",
                       style: TextStyle(
@@ -163,9 +244,7 @@ class TicketView extends StatelessWidget {
                     )
                   ],
                 ),
-                const SizedBox(
-                  height: 4,
-                ),
+                const SizedBox(height: 4),
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -191,9 +270,7 @@ class TicketView extends StatelessWidget {
                         )),
                   ],
                 ),
-                const SizedBox(
-                  height: 16,
-                ),
+                const SizedBox(height: 16),
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -291,9 +368,7 @@ class TicketView extends StatelessWidget {
                     bottomRight: Radius.circular(24))),
             child: const Row(
               children: <Widget>[
-                SizedBox(
-                  width: 16,
-                ),
+                SizedBox(width: 16),
                 Text("Ekonomi",
                     style: TextStyle(
                         fontSize: 16,

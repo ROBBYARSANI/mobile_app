@@ -23,7 +23,7 @@ class PilihTiketController extends GetxController {
 }
 
 void main() {
-  runApp(Checkin());
+  runApp(const Checkin());
 }
 
 class Checkin extends StatelessWidget {
@@ -36,7 +36,7 @@ class Checkin extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: PilihTiketView(),
+      home: const PilihTiketView(),
       initialBinding: BindingsBuilder(() {
         Get.put(PilihTiketController());
       }),
@@ -237,7 +237,7 @@ class PilihTiketView extends GetView<PilihTiketController> {
                                                           .indexGerbong.value]
                                                       [index]["status"] ==
                                                   "available"
-                                              ? Color(0x558D8D8D)
+                                              ? const Color(0x558D8D8D)
                                               : controller.gerbong[controller
                                                               .indexGerbong
                                                               .value][index]
