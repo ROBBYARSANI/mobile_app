@@ -55,18 +55,32 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     final responseBody = json.decode(response.body);
+
     if (response.statusCode == 200 && responseBody['success'] == true) {
+      final userId =
+          responseBody['user_id']; // Mendapatkan user_id dari respons API
+
+      // Simpan email dan user_id ke SharedPreferences
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('userEmail', _emailController.text);
+      await prefs.setInt('user_id', userId);
+
+      // Navigasi ke HomeScreen
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
     } else {
+      // Jika login gagal, tampilkan pesan error
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(responseBody['message'])),
       );
     }
+  }
+
+  Future<void> simpanUserId(int userId) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('user_id', userId);
   }
 
   @override
