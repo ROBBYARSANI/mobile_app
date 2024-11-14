@@ -1,6 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:tiket/user/kereta/checkin.dart';
 
 class datapesawat extends StatefulWidget {
   const datapesawat({super.key});
@@ -156,6 +157,40 @@ class _datapesawatpagestate extends State<datapesawat> {
                     ),
                   ],
                 ),
+              ),
+
+              //
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      padding: const EdgeInsets.symmetric(vertical: 15.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Checkin()),
+                      );
+                    },
+                    child: const Text(
+                      "Pilih Kursi Sekarang",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
               ),
 
               //CO

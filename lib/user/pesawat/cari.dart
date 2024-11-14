@@ -39,7 +39,7 @@ class _pesawatpagestate extends State<pesawatpage> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: const Text(
-          'Cari Kereta',
+          'Cari pesawat',
           style: TextStyle(
             color: Colors.black,
             fontSize: 20,
@@ -141,7 +141,7 @@ class _pesawatpagestate extends State<pesawatpage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Dewasa",
+                              const Text("Jumlah Tiket",
                                   style: TextStyle(fontSize: 14)),
                               Row(
                                 children: [

@@ -141,7 +141,7 @@ class _keretapagestate extends State<keretapage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Dewasa",
+                              const Text("Jumlah Tiket",
                                   style: TextStyle(fontSize: 14)),
                               Row(
                                 children: [

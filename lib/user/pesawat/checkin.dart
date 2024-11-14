@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tiket/user/kereta/inputdata.dart';
 
 class PilihTiketController extends GetxController {
   var indexGerbong = 0.obs;
@@ -61,10 +60,7 @@ class PilihTiketView extends GetView<PilihTiketController> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Color(0xFFFFFFFF)),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => datakereta()),
-            );
+            Navigator.pop(context);
           },
         ),
       ),
@@ -82,8 +78,6 @@ class PilihTiketView extends GetView<PilihTiketController> {
           ),
           Column(
             children: [
-              // Hilangkan SizedBox di sini karena AppBar sudah ada di atas
-              // Bagian teks dan header
               Container(
                 height: 100,
                 padding: const EdgeInsets.symmetric(horizontal: 25),

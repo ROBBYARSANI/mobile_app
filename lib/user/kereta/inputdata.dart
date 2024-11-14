@@ -1,6 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:tiket/user/kereta/checkin.dart';
 
 class datakereta extends StatefulWidget {
   const datakereta({super.key});
@@ -78,7 +79,6 @@ class _datakeretapagestate extends State<datakereta> {
                             ),
                           ),
                           const SizedBox(height: 20),
-
                           const Text("NIK", style: TextStyle(fontSize: 14)),
                           const TextField(
                             decoration: InputDecoration(
@@ -86,62 +86,6 @@ class _datakeretapagestate extends State<datakereta> {
                             ),
                           ),
                           const SizedBox(height: 20),
-
-                          // TUJUAN
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text("Keberangkatan",
-                                        style: TextStyle(fontSize: 14)),
-                                    DropdownButtonFormField<String>(
-                                      items: ["Jakarta", "Bandung"]
-                                          .map((String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(value),
-                                        );
-                                      }).toList(),
-                                      onChanged: (value) {},
-                                      decoration: const InputDecoration(
-                                        border: OutlineInputBorder(),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(width: 20),
-                              const Icon(Icons.compare_arrows,
-                                  color: Colors.blue),
-                              const SizedBox(width: 20),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text("Tujuan",
-                                        style: TextStyle(fontSize: 14)),
-                                    DropdownButtonFormField<String>(
-                                      items: ["Surabaya", "Bali"]
-                                          .map((String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(value),
-                                        );
-                                      }).toList(),
-                                      onChanged: (value) {},
-                                      decoration: const InputDecoration(
-                                        border: OutlineInputBorder(),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 20),
-
                           const Text("Nomor Telp / HP",
                               style: TextStyle(fontSize: 14)),
                           const TextField(
@@ -158,6 +102,40 @@ class _datakeretapagestate extends State<datakereta> {
                 ),
               ),
 
+              //pilih kursi
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      padding: const EdgeInsets.symmetric(vertical: 15.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Checkin()),
+                      );
+                    },
+                    child: const Text(
+                      "Pilih Kursi Sekarang",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+
               //CO
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -172,14 +150,15 @@ class _datakeretapagestate extends State<datakereta> {
                       ),
                     ),
                     onPressed: () {
-                      //QWERTYUIO
+                      //*** */
                     },
                     child: const Text(
                       "Pesan",
                       style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
