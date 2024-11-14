@@ -116,7 +116,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   elevation: 5,
                   child: Image.asset(
-                    'assets/bg_banner.png',
+                    'assets/gambar.jpg',
                     height: 180,
                     width: double.infinity,
                     fit: BoxFit.cover,

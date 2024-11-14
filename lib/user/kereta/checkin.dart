@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 class PilihTiketController extends GetxController {
   var indexGerbong = 0.obs;
   List<List<Map<String, dynamic>>> gerbong = [
-    List.generate(15, (index) => {"status": "available"}),
-    List.generate(15, (index) => {"status": "available"}),
+    List.generate(28, (index) => {"status": "available"}),
+    List.generate(28, (index) => {"status": "available"}),
   ];
 
   void gantiGerbong(int index) {
@@ -147,11 +147,11 @@ class PilihTiketView extends GetView<PilihTiketController> {
                             Expanded(
                               child: Container(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 35),
+                                    const EdgeInsets.symmetric(horizontal: 100),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
-                                  children: ["A", "B", "C", "D", "E"]
+                                  children: ["A", "B", "C", "D"]
                                       .map(
                                         (label) => Text(
                                           label,
@@ -214,12 +214,12 @@ class PilihTiketView extends GetView<PilihTiketController> {
                               Expanded(
                                 child: Obx(
                                   () => GridView.builder(
-                                    padding: const EdgeInsets.all(10),
+                                    padding: const EdgeInsets.all(70),
                                     gridDelegate:
                                         const SliverGridDelegateWithFixedCrossAxisCount(
                                       mainAxisSpacing: 10,
                                       crossAxisSpacing: 10,
-                                      crossAxisCount: 5,
+                                      crossAxisCount: 4,
                                     ),
                                     itemCount: controller
                                         .gerbong[controller.indexGerbong.value]
@@ -265,13 +265,12 @@ class PilihTiketView extends GetView<PilihTiketController> {
                 height: 100,
                 child: Center(
                   child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF656CEE),
-                      fixedSize: Size(Get.width * 0.8, 50),
-                    ),
-                    child: const Text("Pilih Kurisi"),
-                  ),
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF656CEE),
+                        fixedSize: Size(Get.width * 0.8, 50),
+                      ),
+                      child: const Text("Pilih Kurisi")),
                 ),
               ),
             ],
