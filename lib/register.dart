@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:tiket/util/config/config.dart';
+import 'package:http/http.dart' as http;
 import 'package:tiket/login.dart';
 
 void main() {
@@ -20,8 +23,66 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class SignupScreen extends StatelessWidget {
+class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
+
+  @override
+  _SignupScreenState createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends State<SignupScreen> {
+  // Controller untuk form input
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _nikController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+
+  // Fungsi untuk mengirim data pendaftaran ke server
+  Future<void> _registerUser() async {
+    // Mengecek apakah password dan konfirmasi password cocok
+    if (_passwordController.text != _confirmPasswordController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text("Password dan Konfirmasi Password tidak cocok")),
+      );
+      return;
+    }
+
+    // Validasi NIK (pastikan hanya angka dan sesuai format)
+    if (_nikController.text.isEmpty ||
+        !_nikController.text.contains(RegExp(r'^\d+$'))) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("NIK harus berupa angka")),
+      );
+      return;
+    }
+
+    // Mengirimkan data pendaftaran ke server PHP menggunakan HTTP POST
+    final url = Uri.http(AppConfig.API_HOST, '/tiket_go/register.php');
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({
+        'Email': _emailController.text,
+        'nik': _nikController.text,
+        'Password': _passwordController.text,
+      }),
+    );
+
+    // Mengecek respon dari server
+    final responseBody = json.decode(response.body);
+    if (response.statusCode == 200 && responseBody['success'] == true) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(responseBody['message'])),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +94,6 @@ class SignupScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Gambar Header
               Image.asset(
                 'assets/tiketgo.png',
                 width: 200,
@@ -49,7 +109,6 @@ class SignupScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              // Input Email
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -62,6 +121,7 @@ class SignupScreen extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               TextField(
+                controller: _emailController,
                 decoration: InputDecoration(
                   hintText: 'Masukkan Email',
                   filled: true,
@@ -77,7 +137,6 @@ class SignupScreen extends StatelessWidget {
                 style: const TextStyle(color: Colors.black),
               ),
               const SizedBox(height: 16),
-              // Input NIK
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -90,6 +149,7 @@ class SignupScreen extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               TextField(
+                controller: _nikController,
                 decoration: InputDecoration(
                   hintText: 'Masukkan NIK',
                   filled: true,
@@ -105,7 +165,6 @@ class SignupScreen extends StatelessWidget {
                 style: const TextStyle(color: Colors.black),
               ),
               const SizedBox(height: 16),
-              // Input Password
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -118,6 +177,7 @@ class SignupScreen extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               TextField(
+                controller: _passwordController,
                 decoration: InputDecoration(
                   hintText: 'Masukkan kata sandi baru',
                   filled: true,
@@ -133,7 +193,6 @@ class SignupScreen extends StatelessWidget {
                 style: const TextStyle(color: Colors.black),
               ),
               const SizedBox(height: 16),
-              // Konfirmasi Password
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -146,6 +205,7 @@ class SignupScreen extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               TextField(
+                controller: _confirmPasswordController,
                 decoration: InputDecoration(
                   hintText: 'Tulis ulang kata sandi',
                   filled: true,
@@ -161,11 +221,6 @@ class SignupScreen extends StatelessWidget {
                 style: const TextStyle(color: Colors.black),
               ),
               const SizedBox(height: 16),
-              // Tombol Daftar
-
-              const SizedBox(height: 8),
-
-              //loginscreen
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -174,16 +229,7 @@ class SignupScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(12),
                     textStyle: const TextStyle(fontFamily: 'sans-serif-medium'),
                   ),
-                  onPressed: () {
-                    // kodingan daftar
-                    // Setelah berhasil, arahkan ke Login
-
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const LoginScreen()),
-                    );
-                  },
+                  onPressed: _registerUser,
                   child: const Text(
                     'Daftar',
                     style: TextStyle(color: Colors.white),

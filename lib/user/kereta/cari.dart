@@ -141,39 +141,6 @@ class _keretapagestate extends State<keretapage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Anak-anak (>5 tahun)",
-                                  style: TextStyle(fontSize: 14)),
-                              Row(
-                                children: [
-                                  IconButton(
-                                    icon: const Icon(Icons.remove,
-                                        color: Colors.blue),
-                                    onPressed: () {
-                                      setState(() {
-                                        if (jumlahAnak > 0) jumlahAnak--;
-                                      });
-                                    },
-                                  ),
-                                  Text("$jumlahAnak",
-                                      style: const TextStyle(fontSize: 16)),
-                                  IconButton(
-                                    icon: const Icon(Icons.add,
-                                        color: Colors.blue),
-                                    onPressed: () {
-                                      setState(() {
-                                        if (jumlahAnak < 5) jumlahAnak++;
-                                      });
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 20),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
                               const Text("Dewasa",
                                   style: TextStyle(fontSize: 14)),
                               Row(

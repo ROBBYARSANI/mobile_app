@@ -1,33 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiket/user/kapal/inputdata.dart';
 import 'package:tiket/user/kereta/cari.dart';
+import 'package:tiket/user/pesawat/cari.dart';
 import 'package:tiket/user/pesawat/inputdata.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const HomeScreen(),
-      theme: ThemeData(
-          primaryColor: Colors.blue), // Tambahkan primaryColor jika digunakan
-    );
-  }
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class _HomeScreenState extends State<HomeScreen> {
+  String _userEmail = "User"; // Nilai default sementara
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserEmail();
+  }
+
+  // Fungsi untuk mengambil email dari SharedPreferences
+  Future<void> _loadUserEmail() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _userEmail = prefs.getString('userEmail') ?? "User";
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
+          // Background Image
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -36,30 +43,19 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          Positioned.fill(
-            top: 260,
-            child: Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/bg_home_wave.jpg'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.only(top: 50),
             child: Column(
               children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             "Selamat Datang",
                             style: TextStyle(
                               color: Color.fromARGB(255, 78, 119, 208),
@@ -67,8 +63,8 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "Aulia Rayhan",
-                            style: TextStyle(
+                            _userEmail,
+                            style: const TextStyle(
                               color: Color.fromARGB(255, 93, 141, 254),
                               fontSize: 26,
                               fontWeight: FontWeight.bold,
@@ -76,7 +72,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      CircleAvatar(
+                      const CircleAvatar(
                         backgroundImage: AssetImage('assets/tiketgo.png'),
                         radius: 25,
                       ),
@@ -84,6 +80,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
+                // Search Box
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -109,6 +106,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 10),
+                // Banner Image
                 Card(
                   margin: const EdgeInsets.all(10),
                   shape: RoundedRectangleBorder(
@@ -136,6 +134,8 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                const SizedBox(height: 10),
+                // List of Transport Options
                 Expanded(
                   child: ListView(
                     children: [
