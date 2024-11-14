@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class keretapage extends StatefulWidget {
-  const keretapage({super.key});
+class kapalpage extends StatefulWidget {
+  const kapalpage({super.key});
 
   @override
-  State<keretapage> createState() => _keretapagestate();
+  State<kapalpage> createState() => _kapalpagestate();
 }
 
-class _keretapagestate extends State<keretapage> {
+class _kapalpagestate extends State<kapalpage> {
   int jumlahAnak = 0;
   int jumlahDewasa = 0;
   DateTime? tanggalBerangkat;
@@ -39,7 +39,7 @@ class _keretapagestate extends State<keretapage> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: const Text(
-          'Cari Kereta',
+          'Cari kapal',
           style: TextStyle(
             color: Colors.black,
             fontSize: 20,
@@ -92,7 +92,7 @@ class _keretapagestate extends State<keretapage> {
                                     const Text("Keberangkatan",
                                         style: TextStyle(fontSize: 14)),
                                     DropdownButtonFormField<String>(
-                                      items: ["Jakarta", "Bandung"]
+                                      items: ["Jakarta", "Bali", "Surabaya"]
                                           .map((String value) {
                                         return DropdownMenuItem<String>(
                                           value: value,
@@ -118,7 +118,7 @@ class _keretapagestate extends State<keretapage> {
                                     const Text("Tujuan",
                                         style: TextStyle(fontSize: 14)),
                                     DropdownButtonFormField<String>(
-                                      items: ["Surabaya", "Bali"]
+                                      items: ["Surabaya", "Bali", "Jakarta"]
                                           .map((String value) {
                                         return DropdownMenuItem<String>(
                                           value: value,

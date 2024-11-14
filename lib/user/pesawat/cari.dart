@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tiket/util/config/config.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
 
-class kapalpage extends StatefulWidget {
-  const kapalpage({super.key});
+class pesawatpage extends StatefulWidget {
+  const pesawatpage({super.key});
 
   @override
-  State<kapalpage> createState() => _kapalpagestate();
+  State<pesawatpage> createState() => _pesawatpagestate();
 }
 
-class _kapalpagestate extends State<kapalpage> {
+class _pesawatpagestate extends State<pesawatpage> {
   int jumlahAnak = 0;
   int jumlahDewasa = 0;
   DateTime? tanggalBerangkat;
@@ -44,7 +39,7 @@ class _kapalpagestate extends State<kapalpage> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: const Text(
-          'Pesan Tiket',
+          'Cari pesawat',
           style: TextStyle(
             color: Colors.black,
             fontSize: 20,
@@ -71,11 +66,10 @@ class _kapalpagestate extends State<kapalpage> {
                       padding: const EdgeInsets.all(10),
                       child: const Row(
                         children: [
-                          Icon(Icons.co_present, color: Colors.white),
                           SizedBox(width: 20),
                           Expanded(
                             child: Text(
-                              "Mohon isi data dibawah ini sesuai dengan KTP Anda",
+                              "Ingin Pergi Kemana?",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 18),
                             ),
@@ -88,15 +82,6 @@ class _kapalpagestate extends State<kapalpage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text("Nama Penumpang",
-                              style: TextStyle(fontSize: 14)),
-                          const TextField(
-                            decoration: InputDecoration(
-                              hintText: "Masukan nama lengkap",
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-
                           // TUJUAN
                           Row(
                             children: [
@@ -107,7 +92,7 @@ class _kapalpagestate extends State<kapalpage> {
                                     const Text("Keberangkatan",
                                         style: TextStyle(fontSize: 14)),
                                     DropdownButtonFormField<String>(
-                                      items: ["Surabaya", "Bali"]
+                                      items: ["Jakarta", "Bali", "Surabaya"]
                                           .map((String value) {
                                         return DropdownMenuItem<String>(
                                           value: value,
@@ -133,7 +118,7 @@ class _kapalpagestate extends State<kapalpage> {
                                     const Text("Tujuan",
                                         style: TextStyle(fontSize: 14)),
                                     DropdownButtonFormField<String>(
-                                      items: ["Surabaya", "Bali"]
+                                      items: ["Surabaya", "Bali", "Jakarta"]
                                           .map((String value) {
                                         return DropdownMenuItem<String>(
                                           value: value,
@@ -156,40 +141,7 @@ class _kapalpagestate extends State<kapalpage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Anak-anak (16+ tahun)",
-                                  style: TextStyle(fontSize: 14)),
-                              Row(
-                                children: [
-                                  IconButton(
-                                    icon: const Icon(Icons.remove,
-                                        color: Colors.blue),
-                                    onPressed: () {
-                                      setState(() {
-                                        if (jumlahAnak > 0) jumlahAnak--;
-                                      });
-                                    },
-                                  ),
-                                  Text("$jumlahAnak",
-                                      style: const TextStyle(fontSize: 16)),
-                                  IconButton(
-                                    icon: const Icon(Icons.add,
-                                        color: Colors.blue),
-                                    onPressed: () {
-                                      setState(() {
-                                        if (jumlahAnak < 5) jumlahAnak++;
-                                      });
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 20),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text("Dewasa",
+                              const Text("Jumlah Tiket",
                                   style: TextStyle(fontSize: 14)),
                               Row(
                                 children: [
@@ -237,7 +189,7 @@ class _kapalpagestate extends State<kapalpage> {
                           ),
                           const SizedBox(height: 20),
 
-                          // TANGGAL
+                          // Tanggal
                           const Text("Tanggal Berangkat",
                               style: TextStyle(fontSize: 14)),
                           TextField(
@@ -253,16 +205,6 @@ class _kapalpagestate extends State<kapalpage> {
                             ),
                           ),
                           const SizedBox(height: 20),
-
-                          const Text("Nomor Telp / HP",
-                              style: TextStyle(fontSize: 14)),
-                          const TextField(
-                            decoration: InputDecoration(
-                              hintText: "Masukan nomor telepon",
-                              border: OutlineInputBorder(),
-                            ),
-                            keyboardType: TextInputType.phone,
-                          ),
                         ],
                       ),
                     ),
@@ -287,7 +229,7 @@ class _kapalpagestate extends State<kapalpage> {
                       //QWERTYUIO
                     },
                     child: const Text(
-                      "Pesan",
+                      "Cari",
                       style: TextStyle(
                           fontSize: 16,
                           color: Colors.white,

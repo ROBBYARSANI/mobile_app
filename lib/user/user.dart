@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tiket/user/kapal/inputdata.dart';
+import 'package:tiket/user/kapal/cari.dart';
 import 'package:tiket/user/kereta/cari.dart';
-import 'package:tiket/user/pesawat/inputdata.dart';
+import 'package:tiket/user/pesawat/cari.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          // Background Image
+          // Background
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -113,10 +113,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   elevation: 5,
                   child: Image.asset(
-                    'assets/bg_banner.png',
+                    'assets/gambar.jpg',
                     height: 180,
                     width: double.infinity,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fitHeight,
                   ),
                 ),
                 const Padding(
@@ -134,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                // List of Transport Options
+                // List Transport
                 Expanded(
                   child: ListView(
                     children: [
