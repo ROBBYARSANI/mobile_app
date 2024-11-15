@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+void main() {
+  runApp(const MyApp());
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -139,29 +143,6 @@ class TicketView extends StatelessWidget {
                     topRight: Radius.circular(24))),
             child: Column(
               children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Image.asset(
-                          'assets/garuda.png',
-                          width: 24,
-                          height: 24,
-                        ),
-                        const SizedBox(width: 8),
-                        const Text(
-                          "Garuda Indonesia",
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12), // Jarak kolom
-                  ],
-                ),
                 Row(
                   children: <Widget>[
                     const Text(

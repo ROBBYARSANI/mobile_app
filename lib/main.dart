@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tiket/user/pesawat/daftartiket.dart';
 import 'login.dart'; // Pastikan jalur ini sesuai dengan lokasi file LoginScreen Anda
 
 void main() {
@@ -16,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(), // Menetapkan LoginScreen sebagai halaman awal
+      home: const LoginScreen(), // Menetapkan LoginScreen sebagai halaman awal
       debugShowCheckedModeBanner: false,
     );
   }
