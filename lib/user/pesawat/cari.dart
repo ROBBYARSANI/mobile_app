@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'package:tiket/util/config/config.dart';
+import 'package:tiket/user/pesawat/daftartiket.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class pesawatpage extends StatefulWidget {
   const pesawatpage({super.key});
@@ -8,9 +12,11 @@ class pesawatpage extends StatefulWidget {
 }
 
 class _pesawatpagestate extends State<pesawatpage> {
-  int jumlahAnak = 0;
   int jumlahDewasa = 0;
   DateTime? tanggalBerangkat;
+  String? keberangkatan;
+  String? tujuan;
+  String? tipeKelas;
 
   // Fungsi untuk memilih tanggal
   Future<void> pilihTanggal(BuildContext context) async {
@@ -24,6 +30,58 @@ class _pesawatpagestate extends State<pesawatpage> {
       setState(() {
         tanggalBerangkat = picked;
       });
+    }
+  }
+
+  // Fungsi untuk mencari tiket dan mengirim data ke API
+  Future<void> cariTiket() async {
+    if (keberangkatan == null ||
+        tujuan == null ||
+        tipeKelas == null ||
+        tanggalBerangkat == null ||
+        jumlahDewasa == 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Lengkapi semua data terlebih dahulu')),
+      );
+      return;
+    }
+
+    final Uri url =
+        Uri.http(AppConfig.API_HOST, '/tiket_go/pesawat/cari_ps.php');
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "keberangkatan": keberangkatan,
+          "tujuan": tujuan,
+          "jumlah_tiket": jumlahDewasa,
+          "tipe_kelas": tipeKelas,
+          "tanggal":
+              "${tanggalBerangkat!.year}-${tanggalBerangkat!.month.toString().padLeft(2, '0')}-${tanggalBerangkat!.day.toString().padLeft(2, '0')}",
+        }),
+      );
+
+      final data = jsonDecode(response.body);
+
+      if (data['success'] == true) {
+        // Jika sukses, arahkan ke halaman daftar tiket
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomePage(),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(data['message'] ?? 'Gagal mencari tiket')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Terjadi kesalahan: $e')),
+      );
     }
   }
 
@@ -82,7 +140,7 @@ class _pesawatpagestate extends State<pesawatpage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // TUJUAN
+                          // Keberangkatan dan Tujuan
                           Row(
                             children: [
                               Expanded(
@@ -99,7 +157,11 @@ class _pesawatpagestate extends State<pesawatpage> {
                                           child: Text(value),
                                         );
                                       }).toList(),
-                                      onChanged: (value) {},
+                                      onChanged: (value) {
+                                        setState(() {
+                                          keberangkatan = value;
+                                        });
+                                      },
                                       decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                       ),
@@ -125,7 +187,11 @@ class _pesawatpagestate extends State<pesawatpage> {
                                           child: Text(value),
                                         );
                                       }).toList(),
-                                      onChanged: (value) {},
+                                      onChanged: (value) {
+                                        setState(() {
+                                          tujuan = value;
+                                        });
+                                      },
                                       decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                       ),
@@ -137,7 +203,7 @@ class _pesawatpagestate extends State<pesawatpage> {
                           ),
                           const SizedBox(height: 20),
 
-                          // JUMLAH PESAN TIKET
+                          // Jumlah Tiket Dewasa
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -171,7 +237,7 @@ class _pesawatpagestate extends State<pesawatpage> {
                           ),
                           const SizedBox(height: 20),
 
-                          // KELAS KURSI
+                          // Kelas
                           const Text("Tipe / Kelas",
                               style: TextStyle(fontSize: 14)),
                           DropdownButtonFormField<String>(
@@ -182,14 +248,18 @@ class _pesawatpagestate extends State<pesawatpage> {
                                 child: Text(value),
                               );
                             }).toList(),
-                            onChanged: (value) {},
+                            onChanged: (value) {
+                              setState(() {
+                                tipeKelas = value;
+                              });
+                            },
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                             ),
                           ),
                           const SizedBox(height: 20),
 
-                          // Tanggal
+                          // Tanggal Berangkat
                           const Text("Tanggal Berangkat",
                               style: TextStyle(fontSize: 14)),
                           TextField(
@@ -199,7 +269,7 @@ class _pesawatpagestate extends State<pesawatpage> {
                             readOnly: true,
                             decoration: InputDecoration(
                               hintText: tanggalBerangkat != null
-                                  ? "${tanggalBerangkat!.day}/${tanggalBerangkat!.month}/${tanggalBerangkat!.year}"
+                                  ? "${tanggalBerangkat!.year}-${tanggalBerangkat!.month.toString().padLeft(2, '0')}-${tanggalBerangkat!.day.toString().padLeft(2, '0')}"
                                   : "Masukan tanggal",
                               border: const OutlineInputBorder(),
                             ),
@@ -212,7 +282,7 @@ class _pesawatpagestate extends State<pesawatpage> {
                 ),
               ),
 
-              //CO
+              // Tombol Cari
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: SizedBox(
@@ -225,9 +295,7 @@ class _pesawatpagestate extends State<pesawatpage> {
                         borderRadius: BorderRadius.circular(50.0),
                       ),
                     ),
-                    onPressed: () {
-                      //QWERTYUIO
-                    },
+                    onPressed: cariTiket,
                     child: const Text(
                       "Cari",
                       style: TextStyle(
