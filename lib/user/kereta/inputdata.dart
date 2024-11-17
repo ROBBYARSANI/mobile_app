@@ -1,6 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:tiket/user/kereta/bayar.dart';
 import 'package:tiket/user/kereta/checkin.dart';
 
 class datakereta extends StatefulWidget {
@@ -150,7 +151,10 @@ class _datakeretapagestate extends State<datakereta> {
                       ),
                     ),
                     onPressed: () {
-                      //*** */
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => PaymentPage()),
+                      );
                     },
                     child: const Text(
                       "Pesan",
