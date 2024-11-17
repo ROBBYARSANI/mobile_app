@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:tiket/util/config/config.dart';
-import 'package:tiket/user/kereta/daftartiket.dart';
+import 'package:tiket/user/pesawat/daftartiket.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class keretapage extends StatefulWidget {
@@ -70,7 +70,7 @@ class _keretapagestate extends State<keretapage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const HomePage(),
+            builder: (context) => DaftarTiketScreen(tickets: data['tickets']),
           ),
         );
       } else {
@@ -97,7 +97,7 @@ class _keretapagestate extends State<keretapage> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: const Text(
-          'Cari pesawat',
+          'Cari Kereta',
           style: TextStyle(
             color: Colors.black,
             fontSize: 20,
@@ -150,8 +150,18 @@ class _keretapagestate extends State<keretapage> {
                                     const Text("Keberangkatan",
                                         style: TextStyle(fontSize: 14)),
                                     DropdownButtonFormField<String>(
-                                      items: ["Jakarta", "Bali", "Surabaya"]
-                                          .map((String value) {
+                                      items: [
+                                        "Surabaya",
+                                        "Bali",
+                                        "Jakarta",
+                                        "Medan",
+                                        "Makassar",
+                                        "Yogyakarta",
+                                        "Bandung",
+                                        "Singapore",
+                                        "Kuala Lumpur",
+                                        "Sydney"
+                                      ].map((String value) {
                                         return DropdownMenuItem<String>(
                                           value: value,
                                           child: Text(value),
@@ -180,8 +190,18 @@ class _keretapagestate extends State<keretapage> {
                                     const Text("Tujuan",
                                         style: TextStyle(fontSize: 14)),
                                     DropdownButtonFormField<String>(
-                                      items: ["Surabaya", "Bali", "Jakarta"]
-                                          .map((String value) {
+                                      items: [
+                                        "Surabaya",
+                                        "Bali",
+                                        "Jakarta",
+                                        "Medan",
+                                        "Makassar",
+                                        "Yogyakarta",
+                                        "Bandung",
+                                        "Singapore",
+                                        "Kuala Lumpur",
+                                        "Sydney"
+                                      ].map((String value) {
                                         return DropdownMenuItem<String>(
                                           value: value,
                                           child: Text(value),

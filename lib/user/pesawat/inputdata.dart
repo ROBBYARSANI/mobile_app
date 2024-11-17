@@ -73,10 +73,10 @@ class _PesawatPageState extends State<pesawatpage> {
 
     if (response.statusCode == 200) {
       // Jika berhasil, navigasi ke halaman tiket atau tampilkan pesan sukses
-      Navigator.push(
+      /*Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => HomePage()),
-      );
+      );*/
     } else {
       // Jika gagal, tampilkan pesan error
       print("Error: ${response.body}");

@@ -1,27 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-void main() {
-  runApp(const MyApp());
+String _getSingkatan(String kota) {
+  final Map<String, String> singkatanKota = {
+    'Surabaya': 'SBY',
+    'Jakarta': 'JKT',
+    'Bandung': 'BDG',
+    'Yogyakarta': 'YOG',
+  };
+  return singkatanKota[kota] ?? kota;
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Tiket',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: const HomePage(),
-    );
-  }
+String formatJam(int waktu) {
+  String waktuStr = waktu
+      .toString()
+      .padLeft(4, '0'); // Pastikan format 4 digit (contoh: 0800)
+  String jam = waktuStr.substring(0, 2); // Ambil 2 digit pertama untuk jam
+  String menit = waktuStr.substring(2); // Ambil 2 digit terakhir untuk menit
+  return "$jam:$menit"; // Gabungkan dengan format "HH:mm"
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+String formatDurasi(int durasi) {
+  double durasiJam = durasi / 100; // Contoh: 120 menjadi 1.2
+  return '${durasiJam.toStringAsFixed(1)} H';
+}
+
+String formatHarga(double harga) {
+  final formatter = NumberFormat.currency(
+    locale: 'id_ID', // Gunakan format Indonesia
+    symbol: 'Rp ', // Simbol mata uang
+    decimalDigits: 2, // Jumlah angka di belakang koma
+  );
+  return formatter.format(harga); // Format harga sesuai pengaturan
+}
+
+class DaftarTiketScreen extends StatelessWidget {
+  final List<dynamic> tickets;
+
+  DaftarTiketScreen({Key? key, required this.tickets}) : super(key: key);
 
   void _showFilterOptions(BuildContext context) {
     showModalBottomSheet(
@@ -45,16 +61,6 @@ class HomePage extends StatelessWidget {
               value: false,
               onChanged: (bool? value) {},
             ),
-            CheckboxListTile(
-              title: const Text("Air Asia"),
-              value: false,
-              onChanged: (bool? value) {},
-            ),
-            CheckboxListTile(
-              title: const Text("Garuda"),
-              value: false,
-              onChanged: (bool? value) {},
-            ),
           ],
         );
       },
@@ -69,7 +75,7 @@ class HomePage extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           children: [
             const Text(
-              "Urutkan",
+              "Urut berdasarkan",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const Divider(),
@@ -89,26 +95,44 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String keberangkatan = tickets.isNotEmpty
+        ? (tickets[0]['keberangkatan'] ?? 'Tidak Diketahui')
+        : 'Tidak Diketahui';
+    final String tujuan = tickets.isNotEmpty
+        ? (tickets[0]['tujuan'] ?? 'Tidak Diketahui')
+        : 'Tidak Diketahui';
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 78, 158, 222),
-        title: const Text(
-          "Surabaya - Solo",
-          style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
+        title: Text(
+          '$keberangkatan - $tujuan',
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
         ),
-        elevation: 1,
+        elevation: 0,
       ),
       backgroundColor: const Color(0xFFC2E3F7),
       body: Stack(
         children: [
-          ListView.builder(
-            itemCount: 10,
-            padding: const EdgeInsets.only(top: 8, bottom: 8),
-            itemBuilder: (context, index) {
-              return const TicketView();
-            },
-          ),
+          // Bagian utama (daftar tiket atau pesan kosong)
+          tickets.isEmpty
+              ? const Center(
+                  child: Text(
+                    "Tidak ada tiket yang ditemukan",
+                    style: TextStyle(fontSize: 16, color: Colors.black),
+                  ),
+                )
+              : ListView.builder(
+                  itemCount: tickets.length,
+                  padding: const EdgeInsets.all(16),
+                  itemBuilder: (context, index) {
+                    final tiket = tickets[index];
+                    return TicketCard(tiket: tiket);
+                  },
+                ),
+          // FloatingActionButton untuk Filter dan Sort
           Positioned(
             bottom: 20,
             right: 20,
@@ -134,8 +158,10 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class TicketView extends StatelessWidget {
-  const TicketView({super.key});
+class TicketCard extends StatelessWidget {
+  final Map<String, dynamic> tiket;
+
+  const TicketCard({Key? key, required this.tiket}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -153,11 +179,37 @@ class TicketView extends StatelessWidget {
                     topRight: Radius.circular(24))),
             child: Column(
               children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Image.asset(
+                          //diganti dengan logo pada db
+                          tiket['logo'] ?? '',
+                          width: 24,
+                          height: 24,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          //diganti dengan nama_transport pada db
+                          tiket['nama_transport'] ?? "Maskapai",
+                          style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12), // Jarak kolom
+                  ],
+                ),
                 Row(
                   children: <Widget>[
-                    const Text(
-                      "SBY",
-                      style: TextStyle(
+                    Text(
+                      //disesuaikan dengan data keberangkatan, seperti contoh apabila surabaya berarti SBY apabila jakarta berarti JKT
+                      _getSingkatan(tiket['keberangkatan'] ?? ""),
+                      style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.indigo),
@@ -235,9 +287,10 @@ class TicketView extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 16),
-                    const Text(
-                      "SOL",
-                      style: TextStyle(
+                    Text(
+                      //disesuaikan dengan data tujuan, seperti contoh apabila surabaya berarti SBY apabila jakarta berarti JKT
+                      _getSingkatan(tiket['tujuan'] ?? ""),
+                      style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.pink),
@@ -245,18 +298,21 @@ class TicketView extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 4),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     SizedBox(
                         width: 100,
                         child: Text(
-                          "Surabaya",
-                          style: TextStyle(fontSize: 12, color: Colors.grey),
+                          //disesuaikan dengan keberangkatan pada db
+                          tiket['keberangkatan'] ?? '',
+                          style:
+                              const TextStyle(fontSize: 12, color: Colors.grey),
                         )),
                     Text(
-                      "1H",
-                      style: TextStyle(
+                      //sesuaikan dengan waktu perjalanan pada db
+                      formatDurasi(tiket['l_waktu'] ?? 0),
+                      style: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
@@ -264,26 +320,30 @@ class TicketView extends StatelessWidget {
                     SizedBox(
                         width: 100,
                         child: Text(
-                          "Solo",
+                          //disesuaikan dengan tujuan pada db
+                          tiket['tujuan'] ?? '',
                           textAlign: TextAlign.end,
-                          style: TextStyle(fontSize: 12, color: Colors.grey),
+                          style:
+                              const TextStyle(fontSize: 12, color: Colors.grey),
                         )),
                   ],
                 ),
                 const SizedBox(height: 16),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "08:00 AM",
-                      style: TextStyle(
+                      //disesuakan dengan waktu take off pada db
+                      formatJam(tiket['waktu_k']),
+                      style: const TextStyle(
                           fontSize: 18,
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      "02:30 PM",
-                      style: TextStyle(
+                      //diseusaikan dengan waktu landing pada db
+                      formatJam(tiket['waktu_t']),
+                      style: const TextStyle(
                           fontSize: 18,
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
@@ -291,15 +351,13 @@ class TicketView extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 12),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "1 Des 2024",
-                      style: TextStyle(fontSize: 12, color: Colors.grey),
-                    ),
-                    Row(
-                      children: <Widget>[],
+                      //tanggal keberangkatan di db
+                      tiket['tanggal_k'] ?? "",
+                      style: const TextStyle(fontSize: 12, color: Colors.grey),
                     ),
                   ],
                 ),
@@ -366,21 +424,39 @@ class TicketView extends StatelessWidget {
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(24),
                     bottomRight: Radius.circular(24))),
-            child: const Row(
+            child: Row(
               children: <Widget>[
-                SizedBox(width: 16),
-                Text("Ekonomi",
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.grey)),
+                const SizedBox(width: 16),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      //kelas db
+                      "Kelas ${tiket['kelas'] ?? ""}",
+                      style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey),
+                    ),
+                    Text(
+                      //disesuaikan dengan nilai muatan pada db
+                      'Bagasi ${tiket['muatan']} kg',
+                      style: const TextStyle(fontSize: 14, color: Colors.grey),
+                    ),
+                  ],
+                ),
                 Expanded(
-                    child: Text("Rp 150.000",
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black))),
+                  child: Text(
+                    //harga db
+                    formatHarga(
+                        double.tryParse(tiket['harga_jual'].toString()) ?? 0.0),
+                    textAlign: TextAlign.end,
+                    style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  ),
+                ),
               ],
             ),
           ),

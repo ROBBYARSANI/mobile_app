@@ -70,7 +70,7 @@ class _pesawatpagestate extends State<pesawatpage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const HomePage(),
+            builder: (context) => DaftarTiketScreen(tickets: data['tickets']),
           ),
         );
       } else {
@@ -150,8 +150,18 @@ class _pesawatpagestate extends State<pesawatpage> {
                                     const Text("Keberangkatan",
                                         style: TextStyle(fontSize: 14)),
                                     DropdownButtonFormField<String>(
-                                      items: ["Jakarta", "Bali", "Surabaya"]
-                                          .map((String value) {
+                                      items: [
+                                        "Surabaya",
+                                        "Bali",
+                                        "Jakarta",
+                                        "Medan",
+                                        "Makassar",
+                                        "Yogyakarta",
+                                        "Bandung",
+                                        "Singapore",
+                                        "Kuala Lumpur",
+                                        "Sydney"
+                                      ].map((String value) {
                                         return DropdownMenuItem<String>(
                                           value: value,
                                           child: Text(value),
@@ -180,8 +190,18 @@ class _pesawatpagestate extends State<pesawatpage> {
                                     const Text("Tujuan",
                                         style: TextStyle(fontSize: 14)),
                                     DropdownButtonFormField<String>(
-                                      items: ["Surabaya", "Bali", "Jakarta"]
-                                          .map((String value) {
+                                      items: [
+                                        "Surabaya",
+                                        "Bali",
+                                        "Jakarta",
+                                        "Medan",
+                                        "Makassar",
+                                        "Yogyakarta",
+                                        "Bandung",
+                                        "Singapore",
+                                        "Kuala Lumpur",
+                                        "Sydney"
+                                      ].map((String value) {
                                         return DropdownMenuItem<String>(
                                           value: value,
                                           child: Text(value),

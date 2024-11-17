@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:tiket/util/config/config.dart';
-import 'package:tiket/user/kereta/daftartiket.dart';
+import 'package:tiket/user/pesawat/daftartiket.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class kapalpage extends StatefulWidget {
@@ -46,7 +46,8 @@ class _kapalpagestate extends State<kapalpage> {
       return;
     }
 
-    final Uri url = Uri.http(AppConfig.API_HOST, '/tiket_go/kapal/cari_kp.php');
+    final Uri url =
+        Uri.http(AppConfig.API_HOST, '/tiket_go/pesawat/cari_ps.php');
 
     try {
       final response = await http.post(
@@ -69,7 +70,7 @@ class _kapalpagestate extends State<kapalpage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const HomePage(),
+            builder: (context) => DaftarTiketScreen(tickets: data['tickets']),
           ),
         );
       } else {
@@ -149,8 +150,18 @@ class _kapalpagestate extends State<kapalpage> {
                                     const Text("Keberangkatan",
                                         style: TextStyle(fontSize: 14)),
                                     DropdownButtonFormField<String>(
-                                      items: ["Jakarta", "Bali", "Surabaya"]
-                                          .map((String value) {
+                                      items: [
+                                        "Surabaya",
+                                        "Bali",
+                                        "Jakarta",
+                                        "Medan",
+                                        "Makassar",
+                                        "Yogyakarta",
+                                        "Bandung",
+                                        "Singapore",
+                                        "Kuala Lumpur",
+                                        "Sydney"
+                                      ].map((String value) {
                                         return DropdownMenuItem<String>(
                                           value: value,
                                           child: Text(value),
@@ -179,8 +190,18 @@ class _kapalpagestate extends State<kapalpage> {
                                     const Text("Tujuan",
                                         style: TextStyle(fontSize: 14)),
                                     DropdownButtonFormField<String>(
-                                      items: ["Surabaya", "Bali", "Jakarta"]
-                                          .map((String value) {
+                                      items: [
+                                        "Surabaya",
+                                        "Bali",
+                                        "Jakarta",
+                                        "Medan",
+                                        "Makassar",
+                                        "Yogyakarta",
+                                        "Bandung",
+                                        "Singapore",
+                                        "Kuala Lumpur",
+                                        "Sydney"
+                                      ].map((String value) {
                                         return DropdownMenuItem<String>(
                                           value: value,
                                           child: Text(value),
