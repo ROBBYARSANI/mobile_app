@@ -34,60 +34,158 @@ String formatHarga(double harga) {
   return formatter.format(harga); // Format harga sesuai pengaturan
 }
 
-class DaftarTiketScreen extends StatelessWidget {
+class DaftarTiketScreen extends StatefulWidget {
   final List<dynamic> tickets;
 
   DaftarTiketScreen({Key? key, required this.tickets}) : super(key: key);
 
-  void _showFilterOptions(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
-            const Text(
-              "Filter",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const Divider(),
-            CheckboxListTile(
-              title: const Text("Lion Air"),
-              value: false,
-              onChanged: (bool? value) {},
-            ),
-            CheckboxListTile(
-              title: const Text("Garuda"),
-              value: false,
-              onChanged: (bool? value) {},
-            ),
-          ],
-        );
-      },
-    );
+  @override
+  // ignore: library_private_types_in_public_api
+  _DaftarTiketScreenState createState() => _DaftarTiketScreenState();
+}
+
+class _DaftarTiketScreenState extends State<DaftarTiketScreen> {
+  // Variabel untuk menyimpan status filter dan sort
+  List<dynamic> filteredTickets = [];
+  bool sortByMorningToNight = false;
+  bool sortByNightToMorning = false;
+  bool sortByLowToHigh = false;
+  bool sortByHighToLow = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Setel filteredTickets ke tiket awal
+    filteredTickets = widget.tickets;
   }
 
+  // Fungsi untuk menerapkan filter berdasarkan maskapai
+
+  // Fungsi untuk menerapkan sort berdasarkan harga atau waktu
+  void _applySort() {
+    setState(() {
+      if (!sortByNightToMorning &&
+          !sortByMorningToNight &&
+          !sortByHighToLow &&
+          !sortByLowToHigh) {
+        filteredTickets.sort((a, b) => a['id'].compareTo(b['id']));
+      } else {
+        if (sortByMorningToNight) {
+          // Sort berdasarkan waktu Pagi ke Malam
+          filteredTickets.sort((a, b) => a['waktu_k'].compareTo(b['waktu_k']));
+        } else if (sortByNightToMorning) {
+          // Sort berdasarkan waktu Malam ke Pagi
+          filteredTickets.sort((a, b) => b['waktu_k'].compareTo(a['waktu_k']));
+        }
+
+        if (sortByLowToHigh) {
+          // Sort berdasarkan harga terendah ke tertinggi
+          filteredTickets
+              .sort((a, b) => a['harga_jual'].compareTo(b['harga_jual']));
+        } else if (sortByHighToLow) {
+          // Sort berdasarkan harga tertinggi ke terendah
+          filteredTickets
+              .sort((a, b) => b['harga_jual'].compareTo(a['harga_jual']));
+        }
+      }
+    });
+  }
+
+  // Menampilkan opsi sorting
   void _showSortOptions(BuildContext context) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
-            const Text(
-              "Urut berdasarkan",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const Divider(),
-            ListTile(
-              title: const Text("Harga"),
-              onTap: () {},
-            ),
-            ListTile(
-              title: const Text("Waktu"),
-              onTap: () {},
-            ),
-          ],
+        return StatefulBuilder(
+          builder: (context, setStateModal) {
+            return ListView(
+              padding: const EdgeInsets.all(16),
+              children: [
+                const Text(
+                  "Urut berdasarkan",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                const Divider(),
+
+                // Kategori Waktu
+                const Text(
+                  "Urutkan Berdasarkan Waktu",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                CheckboxListTile(
+                  title: const Text("Pagi ke Malam"),
+                  value: sortByMorningToNight,
+                  onChanged: (bool? value) {
+                    setStateModal(() {
+                      if (value == true) {
+                        sortByMorningToNight = true;
+                        sortByNightToMorning = false; // Setel ke default
+                      } else {
+                        sortByMorningToNight =
+                            false; // Jika diklik lagi, kembalikan ke default
+                      }
+                    });
+                    _applySort(); // Terapkan sorting berdasarkan waktu
+                  },
+                ),
+                CheckboxListTile(
+                  title: const Text("Malam ke Pagi"),
+                  value: sortByNightToMorning,
+                  onChanged: (bool? value) {
+                    setStateModal(() {
+                      if (value == true) {
+                        sortByNightToMorning = true;
+                        sortByMorningToNight = false; // Setel ke default
+                      } else {
+                        sortByNightToMorning =
+                            false; // Jika diklik lagi, kembalikan ke default
+                      }
+                    });
+                    _applySort(); // Terapkan sorting berdasarkan waktu
+                  },
+                ),
+                const Divider(),
+
+                // Kategori Harga
+                const Text(
+                  "Urutkan Berdasarkan Harga",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                CheckboxListTile(
+                  title: const Text("Harga Terendah ke Tertinggi"),
+                  value: sortByLowToHigh,
+                  onChanged: (bool? value) {
+                    setStateModal(() {
+                      if (value == true) {
+                        sortByLowToHigh = true;
+                        sortByHighToLow = false; // Setel ke default
+                      } else {
+                        sortByLowToHigh =
+                            false; // Jika diklik lagi, kembalikan ke default
+                      }
+                    });
+                    _applySort(); // Terapkan sorting berdasarkan harga
+                  },
+                ),
+                CheckboxListTile(
+                  title: const Text("Harga Tertinggi ke Terendah"),
+                  value: sortByHighToLow,
+                  onChanged: (bool? value) {
+                    setStateModal(() {
+                      if (value == true) {
+                        sortByHighToLow = true;
+                        sortByLowToHigh = false; // Setel ke default
+                      } else {
+                        sortByHighToLow =
+                            false; // Jika diklik lagi, kembalikan ke default
+                      }
+                    });
+                    _applySort(); // Terapkan sorting berdasarkan harga
+                  },
+                ),
+              ],
+            );
+          },
         );
       },
     );
@@ -95,12 +193,13 @@ class DaftarTiketScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String keberangkatan = tickets.isNotEmpty
-        ? (tickets[0]['keberangkatan'] ?? 'Tidak Diketahui')
+    final String keberangkatan = filteredTickets.isNotEmpty
+        ? (filteredTickets[0]['keberangkatan'] ?? 'Tidak Diketahui')
         : 'Tidak Diketahui';
-    final String tujuan = tickets.isNotEmpty
-        ? (tickets[0]['tujuan'] ?? 'Tidak Diketahui')
+    final String tujuan = filteredTickets.isNotEmpty
+        ? (filteredTickets[0]['tujuan'] ?? 'Tidak Diketahui')
         : 'Tidak Diketahui';
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 78, 158, 222),
@@ -117,7 +216,7 @@ class DaftarTiketScreen extends StatelessWidget {
       body: Stack(
         children: [
           // Bagian utama (daftar tiket atau pesan kosong)
-          tickets.isEmpty
+          filteredTickets.isEmpty
               ? const Center(
                   child: Text(
                     "Tidak ada tiket yang ditemukan",
@@ -125,10 +224,10 @@ class DaftarTiketScreen extends StatelessWidget {
                   ),
                 )
               : ListView.builder(
-                  itemCount: tickets.length,
+                  itemCount: filteredTickets.length,
                   padding: const EdgeInsets.all(16),
                   itemBuilder: (context, index) {
-                    final tiket = tickets[index];
+                    final tiket = filteredTickets[index];
                     return TicketCard(tiket: tiket);
                   },
                 ),
@@ -138,11 +237,6 @@ class DaftarTiketScreen extends StatelessWidget {
             right: 20,
             child: Column(
               children: [
-                FloatingActionButton.extended(
-                  onPressed: () => _showFilterOptions(context),
-                  label: const Text("Filter"),
-                  icon: const Icon(Icons.filter_list),
-                ),
                 const SizedBox(height: 10),
                 FloatingActionButton.extended(
                   onPressed: () => _showSortOptions(context),

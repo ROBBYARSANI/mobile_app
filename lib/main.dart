@@ -16,7 +16,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const datakereta(), // Menetapkan LoginScreen sebagai halaman awal
+      //infokan jika dibypass
+      home:
+          const LoginScreen(), //datakereta(), // Menetapkan LoginScreen sebagai halaman awal
       debugShowCheckedModeBanner: false,
     );
   }

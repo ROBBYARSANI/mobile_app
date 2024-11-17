@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:tiket/util/config/config.dart';
-import 'package:tiket/user/pesawat/daftartiket.dart';
+import 'package:tiket/user/kereta/daftartiket.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
