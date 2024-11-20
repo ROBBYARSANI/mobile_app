@@ -94,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Icon(Icons.search, color: Colors.white),
                       SizedBox(width: 10),
                       Text(
-                        "Kamu mau pergi kemana?",
+                        "Cari kota tujuanmu disini?",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,

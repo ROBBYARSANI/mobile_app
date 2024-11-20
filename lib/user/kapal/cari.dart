@@ -97,7 +97,7 @@ class _kapalpagestate extends State<kapalpage> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: const Text(
-          'Cari pesawat',
+          'Cari Kapal',
           style: TextStyle(
             color: Colors.black,
             fontSize: 20,
