@@ -3,6 +3,7 @@ import 'jadwal.dart';
 import 'tiket.dart';
 import 'log_pesanan.dart';
 
+//pw admin12345
 void main() {
   runApp(const MyApp());
 }
@@ -13,14 +14,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const HomeScreen(),
+      home: const AdminScreen(),
       theme: ThemeData(primaryColor: Colors.blue),
     );
   }
 }
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class AdminScreen extends StatelessWidget {
+  const AdminScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

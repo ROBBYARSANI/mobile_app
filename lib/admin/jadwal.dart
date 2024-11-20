@@ -205,22 +205,40 @@ class JadwalPage extends StatelessWidget {
                           const SizedBox(height: 20),
 
                           // Tanggal Berangkat
-                          const Text("Tanggal Tersedia",
+                          const Text("Tanggal Keberagkatan",
                               style: TextStyle(fontSize: 14)),
                           const TextField(
                             decoration: InputDecoration(
-                              hintText: "Masukan tanggal tiket tersedia",
+                              hintText: "Masukan tanggal Keberangkatan",
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          const Text("Tanggal Sampai Tujuan",
+                              style: TextStyle(fontSize: 14)),
+                          const TextField(
+                            decoration: InputDecoration(
+                              hintText: "Masukan tanggal sampai Tujuan",
                               border: OutlineInputBorder(),
                             ),
                           ),
                           const SizedBox(height: 20),
 
                           // Nomor Telp / HP
-                          const Text("Jam Berangkat",
+                          const Text("Waktu Takeoff",
                               style: TextStyle(fontSize: 14)),
                           const TextField(
                             decoration: InputDecoration(
-                              hintText: "Masukan jam keberangaktan",
+                              hintText: "Masukan waktu takeoff",
+                              border: OutlineInputBorder(),
+                            ),
+                            keyboardType: TextInputType.phone,
+                          ),
+                          const Text("Waktu Landing",
+                              style: TextStyle(fontSize: 14)),
+                          const TextField(
+                            decoration: InputDecoration(
+                              hintText: "Masukan waktu landing",
                               border: OutlineInputBorder(),
                             ),
                             keyboardType: TextInputType.phone,

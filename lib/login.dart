@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tiket/user/user.dart';
+import 'package:tiket/admin/admin.dart';
 import 'package:tiket/util/config/config.dart';
 import 'package:tiket/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -40,6 +41,15 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Email dan Password tidak boleh kosong")),
+      );
+      return;
+    }
+
+    if (_emailController.text == "admin@gmail.com" &&
+        _passwordController.text == "admin12345") {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const AdminScreen()),
       );
       return;
     }

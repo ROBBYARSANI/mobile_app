@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiket/util/config/config.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:tiket/user/pesawat/daftartiket.dart';
+//import 'package:tiket/user/pesawat/daftartiket.dart';
 
 class pesawatpage extends StatefulWidget {
   const pesawatpage({super.key});
@@ -32,10 +32,11 @@ class _PesawatPageState extends State<pesawatpage> {
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
     );
-    if (picked != null && picked != tanggalBerangkat)
+    if (picked != null && picked != tanggalBerangkat) {
       setState(() {
         tanggalBerangkat = picked;
       });
+    }
   }
 
   Future<int?> getUserId() async {

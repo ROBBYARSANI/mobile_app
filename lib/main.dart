@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tiket/user/kereta/inputdata.dart';
-import 'login.dart'; // Pastikan jalur ini sesuai dengan lokasi file LoginScreen Anda
+import 'package:tiket/admin/admin.dart';
+import 'login.dart';
 
 void main() {
   runApp(const MyApp());

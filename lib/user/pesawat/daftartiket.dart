@@ -619,6 +619,11 @@ class TicketCard extends StatelessWidget {
                       tiket['tanggal_k'] ?? "",
                       style: const TextStyle(fontSize: 12, color: Colors.grey),
                     ),
+                    Text(
+                      //tanggal keberangkatan di db
+                      tiket['tanggal_t'] ?? "",
+                      style: const TextStyle(fontSize: 12, color: Colors.grey),
+                    ),
                   ],
                 ),
               ],
