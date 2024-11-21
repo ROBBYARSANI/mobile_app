@@ -7,6 +7,16 @@ String _getSingkatan(String kota) {
     'Jakarta': 'JKT',
     'Bandung': 'BDG',
     'Yogyakarta': 'YOG',
+    'Medan': 'MDN',
+    'Makassar': 'MKS',
+    'Semarang': 'SMG',
+    'Denpasar': 'DPS',
+    'Balikpapan': 'BPN',
+    'Pontianak': 'PNK',
+    'Palembang': 'PLM',
+    'Padang': 'PDG',
+    'Manado': 'MND',
+    'Malang': 'MLG'
   };
   return singkatanKota[kota] ?? kota;
 }
