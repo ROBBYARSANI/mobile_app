@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tiket/admin/admin.dart';
 import 'login.dart';
 
 void main() {
