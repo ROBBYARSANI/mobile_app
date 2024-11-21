@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       ),
       //infokan jika dibypass
       home:
-          const LoginScreen(), //datakereta(), // Menetapkan LoginScreen sebagai halaman awal
+          const AdminScreen(), //LoginScreen(), //datakereta(), // Menetapkan LoginScreen sebagai halaman awal
       debugShowCheckedModeBanner: false,
     );
   }
