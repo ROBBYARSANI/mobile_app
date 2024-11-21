@@ -259,6 +259,16 @@ class _JadwalPageState extends State<JadwalPage> {
                             ),
                             keyboardType: TextInputType.phone,
                           ),
+                          const SizedBox(height: 20),
+
+                          const Text("Bagasi", style: TextStyle(fontSize: 14)),
+                          const TextField(
+                            decoration: InputDecoration(
+                              hintText: "Masukan kapasitas bagasi",
+                              border: OutlineInputBorder(),
+                            ),
+                            keyboardType: TextInputType.number,
+                          ),
                         ],
                       ),
                     ),
