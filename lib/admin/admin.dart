@@ -120,7 +120,7 @@ class AdminScreen extends StatelessWidget {
                         'DAFTAR TIKET',
                         'CEK DAFTAR TIKET',
                         'assets/ic_tiket.png',
-                        const TiketPage(),
+                        TicketsPage(),
                       ),
                     ],
                   ),
