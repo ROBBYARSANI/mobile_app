@@ -70,15 +70,18 @@ class _JadwalPageState extends State<JadwalPage> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      if (_image == null) {
+      /*if (_image == null) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Logo harus diupload')),
         );
         return;
-      }
+      }*/
       try {
         // Prepare image data as base64
-        String? imagePath = _image?.path;
+        String? imagePath;
+        if (_image != null) {
+          imagePath = _image?.path;
+        }
 
         // Prepare data
         final data = {
@@ -94,7 +97,7 @@ class _JadwalPageState extends State<JadwalPage> {
           "waktu_k": _waktuTakeoffController.text,
           "waktu_t": _waktuLandingController.text,
           "muatan": int.tryParse(_kapasitasBagasiController.text),
-          "logo": imagePath,
+          if (imagePath != null) "logo": imagePath,
         };
 
         // Send request to the server
