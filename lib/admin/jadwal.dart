@@ -415,7 +415,7 @@ class _JadwalPageState extends State<JadwalPage> {
                               const Text("Kelas",
                                   style: TextStyle(fontSize: 14)),
                               DropdownButtonFormField<String>(
-                                items: ["Ekonomi", "Eksekutif", "Eksklusif"]
+                                items: ["Ekonomi", "Bisnis", "Eksekutif"]
                                     .map((String value) {
                                   return DropdownMenuItem<String>(
                                     value: value,
