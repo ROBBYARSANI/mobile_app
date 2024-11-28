@@ -435,131 +435,307 @@ class TicketCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      elevation: 5,
-      child: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Nama Maskapai
-            Text(
-              tiket['maskapai'] ?? 'Nama Maskapai',
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // Keberangkatan
+    return Padding(
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(24),
+                    topRight: Radius.circular(24))),
+            child: Column(
+              children: <Widget>[
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Keberangkatan",
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey,
+                    Row(
+                      children: [
+                        Image.asset(
+                          //diganti dengan logo pada db
+                          tiket['logo'] ?? '',
+                          width: 24,
+                          height: 24,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          //diganti dengan nama_transport pada db
+                          tiket['nama_transport'] ?? "Maskapai",
+                          style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12), // Jarak kolom
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Text(
+                      //disesuaikan dengan data keberangkatan, seperti contoh apabila surabaya berarti SBY apabila jakarta berarti JKT
+                      _getSingkatan(tiket['keberangkatan'] ?? ""),
+                      style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.indigo),
+                    ),
+                    const SizedBox(width: 16),
+                    Container(
+                      padding: const EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                          color: Colors.indigo.shade50,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: SizedBox(
+                        height: 8,
+                        width: 8,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                              color: Colors.indigo.shade400,
+                              borderRadius: BorderRadius.circular(5)),
+                        ),
                       ),
                     ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Stack(
+                          children: <Widget>[
+                            SizedBox(
+                              height: 24,
+                              child: LayoutBuilder(
+                                builder: (context, constraints) {
+                                  return Flex(
+                                    direction: Axis.horizontal,
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: List.generate(
+                                        (constraints.constrainWidth() / 6)
+                                            .floor(),
+                                        (index) => SizedBox(
+                                              height: 1,
+                                              width: 3,
+                                              child: DecoratedBox(
+                                                decoration: BoxDecoration(
+                                                    color:
+                                                        Colors.grey.shade300),
+                                              ),
+                                            )),
+                                  );
+                                },
+                              ),
+                            ),
+                            Center(
+                              child: Icon(
+                                Icons.arrow_forward,
+                                color: Colors.indigo.shade300,
+                                size: 24,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                          color: Colors.pink.shade50,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: SizedBox(
+                        height: 8,
+                        width: 8,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                              color: Colors.pink.shade400,
+                              borderRadius: BorderRadius.circular(5)),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
                     Text(
-                      tiket['keberangkatan'] ?? '-',
-                      style: const TextStyle(fontSize: 16),
+                      //disesuaikan dengan data tujuan, seperti contoh apabila surabaya berarti SBY apabila jakarta berarti JKT
+                      _getSingkatan(tiket['tujuan'] ?? ""),
+                      style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.pink),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    SizedBox(
+                        width: 100,
+                        child: Text(
+                          //disesuaikan dengan keberangkatan pada db
+                          tiket['keberangkatan'] ?? '',
+                          style:
+                              const TextStyle(fontSize: 12, color: Colors.grey),
+                        )),
+                    Text(
+                      //sesuaikan dengan waktu perjalanan pada db
+                      formatDurasi(tiket['l_waktu'] ?? 0),
+                      style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
+                    SizedBox(
+                        width: 100,
+                        child: Text(
+                          //disesuaikan dengan tujuan pada db
+                          tiket['tujuan'] ?? '',
+                          textAlign: TextAlign.end,
+                          style:
+                              const TextStyle(fontSize: 12, color: Colors.grey),
+                        )),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      //disesuakan dengan waktu take off pada db
+                      formatJam(tiket['waktu_k']),
+                      style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      //diseusaikan dengan waktu landing pada db
+                      formatJam(tiket['waktu_t']),
+                      style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
-                // Tujuan
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Tujuan",
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey,
-                      ),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      //tanggal keberangkatan di db
+                      tiket['tanggal_k'] ?? "",
+                      style: const TextStyle(fontSize: 12, color: Colors.grey),
                     ),
                     Text(
-                      tiket['tujuan'] ?? '-',
-                      style: const TextStyle(fontSize: 16),
+                      //tanggal keberangkatan di db
+                      tiket['tanggal_t'] ?? "",
+                      style: const TextStyle(fontSize: 12, color: Colors.grey),
                     ),
                   ],
                 ),
               ],
             ),
-            const SizedBox(height: 10),
-            // Tanggal dan Harga
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // Tanggal
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Tanggal",
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    Text(
-                      tiket['tanggal'] ?? '-',
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                  ],
+          ),
+          Container(
+            color: Colors.white,
+            child: Row(
+              children: <Widget>[
+                SizedBox(
+                  height: 20,
+                  width: 10,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                            topRight: Radius.circular(10),
+                            bottomRight: Radius.circular(10)),
+                        color: Colors.grey.shade200),
+                  ),
                 ),
-                // Harga
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Harga",
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey,
-                      ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        return Flex(
+                          direction: Axis.horizontal,
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: List.generate(
+                              (constraints.constrainWidth() / 10).floor(),
+                              (index) => SizedBox(
+                                    height: 1,
+                                    width: 5,
+                                    child: DecoratedBox(
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey.shade400),
+                                    ),
+                                  )),
+                        );
+                      },
                     ),
-                    Text(
-                      "Rp ${tiket['harga']?.toString() ?? '0'}",
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                  ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                  width: 10,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            bottomLeft: Radius.circular(10)),
+                        color: Colors.grey.shade200),
+                  ),
                 ),
               ],
             ),
-            const SizedBox(height: 10),
-            // Tombol Pesan
-            Align(
-              alignment: Alignment.centerRight,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+          ),
+          Container(
+            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 12),
+            decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(24),
+                    bottomRight: Radius.circular(24))),
+            child: Row(
+              children: <Widget>[
+                const SizedBox(width: 16),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      //kelas db
+                      "Kelas ${tiket['kelas'] ?? ""}",
+                      style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey),
+                    ),
+                    Text(
+                      //disesuaikan dengan nilai muatan pada db
+                      'Bagasi ${tiket['muatan']} kg',
+                      style: const TextStyle(fontSize: 14, color: Colors.grey),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: Text(
+                    //harga db
+                    formatHarga(
+                        double.tryParse(tiket['harga_jual'].toString()) ?? 0.0),
+                    textAlign: TextAlign.end,
+                    style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
                   ),
                 ),
-                onPressed: () {
-                  // Aksi ketika tombol pesan ditekan
-                },
-                child: const Text(
-                  "Pesan Sekarang",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

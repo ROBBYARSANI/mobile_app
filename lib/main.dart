@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tiket/admin/admin.dart';
-import 'package:tiket/user/pesawat/checkin.dart';
 import 'login.dart';
 
 void main() {
@@ -19,7 +18,7 @@ class MyApp extends StatelessWidget {
       ),
       //infokan jika dibypass
       home:
-          const AdminScreen(), //LoginScreen(), //datakereta(), // Menetapkan LoginScreen sebagai halaman awal
+          const LoginScreen(), //LoginScreen(), //datakereta(), // Menetapkan LoginScreen sebagai halaman awal
       debugShowCheckedModeBanner: false,
     );
   }
