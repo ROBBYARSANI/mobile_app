@@ -304,30 +304,50 @@ class _JadwalPageState extends State<JadwalPage> {
                                       children: [
                                         const Text("Keberangkatan",
                                             style: TextStyle(fontSize: 14)),
-                                        DropdownButtonFormField<String>(
-                                          items: [
-                                            "Jakarta",
-                                            "Semarang",
-                                            "Surabaya"
-                                          ].map((String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(value),
-                                            );
-                                          }).toList(),
-                                          onChanged: (value) {
-                                            keberangkatan = value;
-                                          },
-                                          validator: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
-                                              return 'Pilih keberangkatan';
+                                        Autocomplete<String>(
+                                          optionsBuilder: (TextEditingValue
+                                              textEditingValue) {
+                                            if (textEditingValue.text.isEmpty) {
+                                              return const Iterable<
+                                                  String>.empty();
                                             }
-                                            return null;
+                                            return [
+                                              "Jakarta",
+                                              "Semarang",
+                                              "Surabaya"
+                                            ].where((String option) {
+                                              return option
+                                                  .toLowerCase()
+                                                  .contains(textEditingValue
+                                                      .text
+                                                      .toLowerCase());
+                                            });
                                           },
-                                          decoration: const InputDecoration(
-                                            border: OutlineInputBorder(),
-                                          ),
+                                          onSelected: (String selection) {
+                                            setState(() {
+                                              keberangkatan = selection;
+                                            });
+                                          },
+                                          fieldViewBuilder: (context,
+                                              controller,
+                                              focusNode,
+                                              onEditingComplete) {
+                                            return TextFormField(
+                                              controller: controller,
+                                              focusNode: focusNode,
+                                              decoration: const InputDecoration(
+                                                labelText: 'Keberangkatan',
+                                                border: OutlineInputBorder(),
+                                              ),
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty) {
+                                                  return 'Pilih keberangkatan';
+                                                }
+                                                return null;
+                                              },
+                                            );
+                                          },
                                         ),
                                       ],
                                     ),
@@ -343,27 +363,47 @@ class _JadwalPageState extends State<JadwalPage> {
                                       children: [
                                         const Text("Tujuan",
                                             style: TextStyle(fontSize: 14)),
-                                        DropdownButtonFormField<String>(
-                                          items: ["Surabaya", "Bali", "Batam"]
-                                              .map((String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(value),
-                                            );
-                                          }).toList(),
-                                          onChanged: (value) {
-                                            tujuan = value;
-                                          },
-                                          validator: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
-                                              return 'Pilih tujuan';
+                                        Autocomplete<String>(
+                                          optionsBuilder: (TextEditingValue
+                                              textEditingValue) {
+                                            if (textEditingValue.text.isEmpty) {
+                                              return const Iterable<
+                                                  String>.empty();
                                             }
-                                            return null;
+                                            return ["Surabaya", "Bali", "Batam"]
+                                                .where((String option) {
+                                              return option
+                                                  .toLowerCase()
+                                                  .contains(textEditingValue
+                                                      .text
+                                                      .toLowerCase());
+                                            });
                                           },
-                                          decoration: const InputDecoration(
-                                            border: OutlineInputBorder(),
-                                          ),
+                                          onSelected: (String selection) {
+                                            setState(() {
+                                              tujuan = selection;
+                                            });
+                                          },
+                                          fieldViewBuilder: (context,
+                                              controller,
+                                              focusNode,
+                                              onEditingComplete) {
+                                            return TextFormField(
+                                              controller: controller,
+                                              focusNode: focusNode,
+                                              decoration: const InputDecoration(
+                                                labelText: 'Tujuan',
+                                                border: OutlineInputBorder(),
+                                              ),
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty) {
+                                                  return 'Pilih tujuan';
+                                                }
+                                                return null;
+                                              },
+                                            );
+                                          },
                                         ),
                                       ],
                                     ),
