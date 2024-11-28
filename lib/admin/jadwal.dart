@@ -294,7 +294,7 @@ class _JadwalPageState extends State<JadwalPage> {
                               ),
                               const SizedBox(height: 20),
 
-                              // Departure and destination
+                              // tujuan , keberangkatan
                               Row(
                                 children: [
                                   Expanded(
@@ -336,7 +336,7 @@ class _JadwalPageState extends State<JadwalPage> {
                                               controller: controller,
                                               focusNode: focusNode,
                                               decoration: const InputDecoration(
-                                                labelText: 'Keberangkatan',
+                                                hintText: 'Keberangkatan',
                                                 border: OutlineInputBorder(),
                                               ),
                                               validator: (value) {
@@ -392,7 +392,7 @@ class _JadwalPageState extends State<JadwalPage> {
                                               controller: controller,
                                               focusNode: focusNode,
                                               decoration: const InputDecoration(
-                                                labelText: 'Tujuan',
+                                                hintText: 'Tujuan',
                                                 border: OutlineInputBorder(),
                                               ),
                                               validator: (value) {
@@ -551,7 +551,7 @@ class _JadwalPageState extends State<JadwalPage> {
                                 controller: _kapasitasBagasiController,
                                 keyboardType: TextInputType.number,
                                 decoration: const InputDecoration(
-                                  hintText: "Masukan kapasitas bagasi",
+                                  hintText: "Masukan kapasitas bagasi (Kg)",
                                   border: OutlineInputBorder(),
                                 ),
                                 validator: (value) {
