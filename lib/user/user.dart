@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tiket/login.dart';
 import 'package:tiket/user/kapal/cari.dart';
 import 'package:tiket/user/kereta/cari.dart';
 import 'package:tiket/user/pesawat/cari.dart';
@@ -43,42 +44,65 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 50),
+            padding: const EdgeInsets.only(top: 10),
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  padding: const EdgeInsets.only(top: 50),
+                  child: Column(
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Selamat Datang",
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 78, 119, 208),
-                              fontSize: 16,
+                      // Button
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: IconButton(
+                            icon: const Icon(Icons.logout),
+                            onPressed: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const LoginScreen(),
+                              ),
                             ),
                           ),
-                          Text(
-                            _userEmail,
-                            style: const TextStyle(
-                              color: Color.fromARGB(255, 93, 141, 254),
-                              fontSize: 26,
-                              fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "Selamat Datang",
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 78, 119, 208),
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                Text(
+                                  _userEmail,
+                                  style: const TextStyle(
+                                    color: Color.fromARGB(255, 93, 141, 254),
+                                    fontSize: 26,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
+                            const CircleAvatar(
+                              backgroundImage: AssetImage('assets/tiketgo.png'),
+                              radius: 25,
+                            ),
+                          ],
+                        ),
                       ),
-                      const CircleAvatar(
-                        backgroundImage: AssetImage('assets/tiketgo.png'),
-                        radius: 25,
-                      ),
+                      const SizedBox(height: 20),
                     ],
                   ),
                 ),
-                const SizedBox(height: 20),
+
                 // Search Box
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -105,6 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 const SizedBox(height: 10),
+
                 // Banner Image
                 Card(
                   margin: const EdgeInsets.all(10),
@@ -134,6 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 const SizedBox(height: 10),
+
                 // List Transport
                 Expanded(
                   child: ListView(
@@ -164,7 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-          ),
+          )
         ],
       ),
     );
