@@ -39,7 +39,7 @@ class _KeretaPageState extends State<datakereta> {
     }
 
     final url =
-        Uri.http(AppConfig.API_HOST, '/tiket_go/pesawat/input_data_ps.php');
+        Uri.http(AppConfig.API_HOST, '/tiket_go/kereta/input_data_kr.php');
     final response = await http.post(
       url,
       headers: {"Content-Type": "application/json"},
@@ -80,7 +80,7 @@ class _KeretaPageState extends State<datakereta> {
     }
 
     final urlTransaksi =
-        Uri.http(AppConfig.API_HOST, '/tiket_go/pesawat/transaksi.php');
+        Uri.http(AppConfig.API_HOST, '/tiket_go/kereta/transaksi_kr.php');
     final response = await http.post(
       urlTransaksi,
       headers: {"Content-Type": "application/json"},

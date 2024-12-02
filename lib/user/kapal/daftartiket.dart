@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tiket/user/kereta/inputdata.dart';
+import 'package:tiket/user/kapal/inputdata.dart';
 
 String _getSingkatan(String kota) {
   final Map<String, String> singkatanKota = {
@@ -604,7 +604,7 @@ class TicketCard extends StatelessWidget {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const datakereta(),
+                              builder: (context) => const datakapal(),
                             ),
                           );
                         },

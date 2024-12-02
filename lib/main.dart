@@ -26,11 +26,7 @@ class MyApp extends StatelessWidget {
       ),
       //infokan jika dibypass
       home:
-<<<<<<< HEAD
           const HomeScreen(), //LoginScreen(), //datakereta(), // Menetapkan LoginScreen sebagai halaman awa
-=======
-          const LoginScreen(), //LoginScreen(), //datakereta(), // Menetapkan LoginScreen sebagai halaman awa
->>>>>>> be6c40d00d798debddd9f8767298ecac1c01e976
       debugShowCheckedModeBanner: false,
     );
   }
