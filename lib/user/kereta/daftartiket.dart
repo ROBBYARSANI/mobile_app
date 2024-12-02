@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tiket/user/kereta/cari.dart';
 
 String _getSingkatan(String kota) {
   final Map<String, String> singkatanKota = {
@@ -525,80 +526,133 @@ class TicketCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.only(left: 16, right: 16, bottom: 12),
             decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(24),
-                    bottomRight: Radius.circular(24))),
-            child: Row(
-              children: <Widget>[
-                const SizedBox(width: 16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      //kelas db
-                      "Kelas ${tiket['kelas'] ?? ""}",
-                      style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.grey),
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(24),
+                bottomRight: Radius.circular(24),
+              ),
+            ),
+            child: Column(
+              // Gunakan Column untuk menggabungkan semua elemen
+              children: [
+                Row(
+                  children: <Widget>[
+                    const SizedBox(width: 16),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          // kelas dari database
+                          "Kelas ${tiket['kelas'] ?? ""}",
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        Text(
+                          // Muatan bagasi dari database
+                          'Bagasi ${tiket['muatan']} kg',
+                          style:
+                              const TextStyle(fontSize: 14, color: Colors.grey),
+                        ),
+                      ],
                     ),
-                    Text(
-                      //disesuaikan dengan nilai muatan pada db
-                      'Bagasi ${tiket['muatan']} kg',
-                      style: const TextStyle(fontSize: 14, color: Colors.grey),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text(
+                            // Harga dari database
+                            formatHarga(double.tryParse(
+                                    tiket['harga_jual'].toString()) ??
+                                0.0),
+                            textAlign: TextAlign.end,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          const SizedBox(height: 16), // Jarak antar elemen
+                          Row(
+                            children: [
+                              Expanded(
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.blue,
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 15.0),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50.0),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    // Arahkan pengguna ke halaman keretapage
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const keretapage(),
+                                      ),
+                                    );
+                                  },
+                                  child: const Text(
+                                    "Pesan",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
-                Expanded(
-                  child: Text(
-                    //harga db
-                    formatHarga(
-                        double.tryParse(tiket['harga_jual'].toString()) ?? 0.0),
-                    textAlign: TextAlign.end,
-                    style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),
-                ),
-              ],
-            ), // Jarak antar elemen
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      padding: const EdgeInsets.symmetric(vertical: 15.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50.0),
-                      ),
-                    ),
-                    onPressed: () async {
-                      int transportId = tiket['id']; // Contoh ID transportasi
-                      await saveTicketId(
-                          transportId); // Menyimpan ID ke SharedPreferences
-
-                      print('id: $transportId');
-
-                      // Navigasi ke halaman pesawatpage
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const pesawatpage(),
+                const SizedBox(height: 16), // Jarak antar elemen
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          padding: const EdgeInsets.symmetric(vertical: 15.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50.0),
+                          ),
                         ),
-                      );
-                    },
-                    child: const Text(
-                      "Pesan",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                        onPressed: () async {
+                          int transportId =
+                              tiket['id']; // Contoh ID transportasi
+                          await saveTicketId(
+                              transportId); // Menyimpan ID ke SharedPreferences
+
+                          print('id: $transportId');
+
+                          // Navigasi ke halaman pesawatpage
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const keretapage(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          "Pesan",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),

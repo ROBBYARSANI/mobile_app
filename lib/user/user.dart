@@ -68,35 +68,40 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                        child: SingleChildScrollView(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  "Selamat Datang",
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 78, 119, 208),
-                                    fontSize: 16,
-                                  ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "Selamat Datang",
+                                      style: TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 78, 119, 208),
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    Text(
+                                      _userEmail,
+                                      style: const TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 93, 141, 254),
+                                        fontSize: 26,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  _userEmail,
-                                  style: const TextStyle(
-                                    color: Color.fromARGB(255, 93, 141, 254),
-                                    fontSize: 26,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                const CircleAvatar(
+                                  backgroundImage:
+                                      AssetImage('assets/tiketgo.png'),
+                                  radius: 25,
                                 ),
                               ],
-                            ),
-                            const CircleAvatar(
-                              backgroundImage: AssetImage('assets/tiketgo.png'),
-                              radius: 25,
-                            ),
-                          ],
-                        ),
+                            )),
                       ),
                       const SizedBox(height: 20),
                     ],

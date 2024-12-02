@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:tiket/user/kapal/bayar.dart';
 import 'package:tiket/util/config/config.dart';
 import 'package:tiket/user/pesawat/daftartiket.dart';
 import 'package:flutter/material.dart';
@@ -315,7 +316,14 @@ class _kapalpagestate extends State<kapalpage> {
                         borderRadius: BorderRadius.circular(50.0),
                       ),
                     ),
-                    onPressed: cariTiket,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PaymentPage(),
+                        ),
+                      );
+                    },
                     child: const Text(
                       "Cari",
                       style: TextStyle(

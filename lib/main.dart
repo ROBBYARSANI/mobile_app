@@ -3,6 +3,7 @@ import 'package:tiket/user/pesawat/cari.dart';
 //import 'package:tiket/user/pesawat/inputdata.dart';
 import 'package:tiket/user/kapal/inputdata.dart';
 import 'package:tiket/admin/admin.dart';
+import 'package:tiket/user/kapal/cari.dart';
 import 'package:tiket/user/user.dart';
 import 'package:tiket/user/pesawat/checkin.dart';
 
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       ),
       //infokan jika dibypass
       home:
-          const pesawatpage(), //LoginScreen(), //datakereta(), // Menetapkan LoginScreen sebagai halaman awa
+          const LoginScreen(), //LoginScreen(), //datakereta(), // Menetapkan LoginScreen sebagai halaman awa
       debugShowCheckedModeBanner: false,
     );
   }
