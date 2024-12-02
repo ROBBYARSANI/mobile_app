@@ -1,20 +1,102 @@
+import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/material.dart';
+import 'package:tiket/util/config/config.dart';
 import 'package:http/http.dart' as http;
-import 'package:tiket/user/kereta/bayar.dart';
-import 'package:tiket/user/kereta/checkin.dart';
+import 'package:flutter/material.dart';
+//import 'package:tiket/user/pesawat/daftartiket.dart';
 
 class datakereta extends StatefulWidget {
   const datakereta({super.key});
 
   @override
-  State<datakereta> createState() => _datakeretapagestate();
+  State<datakereta> createState() => _KeretaPageState();
 }
 
-class _datakeretapagestate extends State<datakereta> {
-  int jumlahAnak = 0;
-  int jumlahDewasa = 0;
-  DateTime? tanggalBerangkat;
+class _KeretaPageState extends State<datakereta> {
+  // Controller untuk mengambil input dari TextField
+  final namaPenumpangController = TextEditingController();
+  final nomorTeleponController = TextEditingController();
+  int jumlahAnak = 0; // Variabel untuk jumlah anak
+  int jumlahDewasa = 0; // Variabel untuk jumlah dewasa
+
+  Future<int?> getUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('user_id');
+  }
+
+  Future<int?> gettransportId() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('id_transport');
+  }
+
+  // Fungsi untuk mengirim data ke API
+  Future<void> pesanTiket() async {
+    final userId = await getUserId(); // Ambil user_id yang telah disimpan
+    if (userId == null) {
+      // Tangani jika user_id tidak ditemukan (misalnya, user belum login)
+      print("User belum login");
+      return;
+    }
+
+    final url =
+        Uri.http(AppConfig.API_HOST, '/tiket_go/pesawat/input_data_ps.php');
+    final response = await http.post(
+      url,
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({
+        "user_id": userId, // Ganti dengan user_id yang sesuai
+        "nama_penumpang": namaPenumpangController.text, // Ambil dari TextField
+        "nomor_telepon": nomorTeleponController.text, // Ambil dari TextField
+        "jumlah_anak": jumlahAnak,
+        "jumlah_dewasa": jumlahDewasa,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print('Response Body: ${response.body}');
+      try {
+        final data = jsonDecode(response.body);
+        final idPemesanan = data['id_pemesanan'];
+        if (idPemesanan == null) {
+          print("Error: id_pemesanan tidak ditemukan");
+          return;
+        }
+        print("Data berhasil disimpan: $data");
+        await kirimKeTransaksi(idPemesanan);
+      } catch (e) {
+        print("Kesalahan parsing JSON: ${response.body}");
+      }
+    } else {
+      print("Error: ${response.statusCode}, ${response.body}");
+    }
+  }
+
+  Future<void> kirimKeTransaksi(int idPemesanan) async {
+    final tUser = await gettransportId();
+    if (tUser == null) {
+      // Tangani jika user_id tidak ditemukan (misalnya, user belum login)
+      print("Sepertinya masih ada masalah");
+      return;
+    }
+
+    final urlTransaksi =
+        Uri.http(AppConfig.API_HOST, '/tiket_go/pesawat/transaksi.php');
+    final response = await http.post(
+      urlTransaksi,
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({
+        "id_pemesanan": idPemesanan,
+        "id_transport": tUser,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print("Transaksi berhasil disimpan");
+      // Bisa melakukan navigasi atau aksi lain setelah berhasil
+    } else {
+      print("Error saat menyimpan transaksi: ${response.body}");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,27 +156,102 @@ class _datakeretapagestate extends State<datakereta> {
                         children: [
                           const Text("Nama Penumpang",
                               style: TextStyle(fontSize: 14)),
-                          const TextField(
-                            decoration: InputDecoration(
+                          TextField(
+                            controller:
+                                namaPenumpangController, // Ambil dari controller
+                            decoration: const InputDecoration(
                               hintText: "Masukan nama lengkap",
                             ),
                           ),
                           const SizedBox(height: 20),
-                          const Text("NIK", style: TextStyle(fontSize: 14)),
-                          const TextField(
-                            decoration: InputDecoration(
-                              hintText: "Masukan NIK Sesuai dengan KTP",
-                            ),
+
+                          // Jumlah Anak-anak
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text("Anak-anak (16+ tahun)",
+                                  style: TextStyle(fontSize: 14)),
+                              Row(
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(Icons.remove,
+                                        color: Colors.blue),
+                                    onPressed: () {
+                                      setState(() {
+                                        if (jumlahAnak > 0) jumlahAnak--;
+                                      });
+                                    },
+                                  ),
+                                  Text("$jumlahAnak",
+                                      style: const TextStyle(fontSize: 16)),
+                                  IconButton(
+                                    icon: const Icon(Icons.add,
+                                        color: Colors.blue),
+                                    onPressed: () {
+                                      setState(() {
+                                        if (jumlahAnak < 5) jumlahAnak++;
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                           const SizedBox(height: 20),
+
+                          // Jumlah Dewasa
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text("Dewasa",
+                                  style: TextStyle(fontSize: 14)),
+                              Row(
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(Icons.remove,
+                                        color: Colors.blue),
+                                    onPressed: () {
+                                      setState(() {
+                                        if (jumlahDewasa > 0) jumlahDewasa--;
+                                      });
+                                    },
+                                  ),
+                                  Text("$jumlahDewasa",
+                                      style: const TextStyle(fontSize: 16)),
+                                  IconButton(
+                                    icon: const Icon(Icons.add,
+                                        color: Colors.blue),
+                                    onPressed: () {
+                                      setState(() {
+                                        if (jumlahDewasa < 5) jumlahDewasa++;
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+
+                          // Nomor Telp / HP
                           const Text("Nomor Telp / HP",
                               style: TextStyle(fontSize: 14)),
-                          const TextField(
-                            decoration: InputDecoration(
+                          TextField(
+                            controller:
+                                nomorTeleponController, // Ambil dari controller
+                            decoration: const InputDecoration(
                               hintText: "Masukan nomor telepon",
                               border: OutlineInputBorder(),
                             ),
                             keyboardType: TextInputType.phone,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.all(
+                                16.0), // Margin seragam 16 piksel di semua sisi
+                            child: Text(
+                              'E-tiket akan dikirim ke Example@gmail.com',
+                              style: TextStyle(fontSize: 16),
+                            ),
                           ),
                         ],
                       ),
@@ -102,8 +259,7 @@ class _datakeretapagestate extends State<datakereta> {
                   ],
                 ),
               ),
-
-              //pilih kursi
+              // Button Checkout
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: SizedBox(
@@ -117,52 +273,14 @@ class _datakeretapagestate extends State<datakereta> {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Checkin()),
-                      );
-                    },
-                    child: const Text(
-                      "Pilih Kursi Sekarang",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-
-              //CO
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      padding: const EdgeInsets.symmetric(vertical: 15.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50.0),
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => PaymentPage()),
-                      );
+                      pesanTiket(); // Memanggil fungsi pesanTiket saat tombol diklik
                     },
                     child: const Text(
                       "Pesan",
                       style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
+                          fontSize: 16,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),

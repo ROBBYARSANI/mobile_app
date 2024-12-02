@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 String _getSingkatan(String kota) {
   final Map<String, String> singkatanKota = {
@@ -256,6 +257,11 @@ class TicketCard extends StatelessWidget {
   final Map<String, dynamic> tiket;
 
   const TicketCard({Key? key, required this.tiket}) : super(key: key);
+
+  Future<void> saveTicketId(int id) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('id_transport', id); // Menyimpan ID sebagai int
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -554,6 +560,44 @@ class TicketCard extends StatelessWidget {
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.black),
+                  ),
+                ),
+              ],
+            ), // Jarak antar elemen
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      padding: const EdgeInsets.symmetric(vertical: 15.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
+                    ),
+                    onPressed: () async {
+                      int transportId = tiket['id']; // Contoh ID transportasi
+                      await saveTicketId(
+                          transportId); // Menyimpan ID ke SharedPreferences
+
+                      print('id: $transportId');
+
+                      // Navigasi ke halaman pesawatpage
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const pesawatpage(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      "Pesan",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
               ],

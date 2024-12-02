@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiket/user/pesawat/inputdata.dart';
 
 String _getSingkatan(String kota) {
@@ -434,6 +435,12 @@ class TicketCard extends StatelessWidget {
 
   const TicketCard({Key? key, required this.tiket}) : super(key: key);
 
+  // Menyimpan ID sebagai int
+  Future<void> saveTicketId(int id) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('id_transport', id); // Menyimpan ID sebagai int
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -755,13 +762,19 @@ class TicketCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(50.0),
                           ),
                         ),
-                        onPressed: () {
-                          // Arahkan pengguna ke halaman PesawatPage
-                          Navigator.push(
+                        onPressed: () async {
+                          int transportId =
+                              tiket['id']; // Contoh ID transportasi
+                          await saveTicketId(
+                              transportId); // Menyimpan ID ke SharedPreferences
+
+                          print('id: $transportId');
+
+                          // Navigasi ke halaman pesawatpage
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  const pesawatpage(), // Pastikan nama kelas benar
+                              builder: (context) => const pesawatpage(),
                             ),
                           );
                         },

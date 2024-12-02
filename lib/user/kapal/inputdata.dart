@@ -5,28 +5,43 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 //import 'package:tiket/user/pesawat/daftartiket.dart';
 
-class pesawatpage extends StatefulWidget {
-  const pesawatpage({super.key});
+class kapalpage extends StatefulWidget {
+  const kapalpage({super.key});
 
   @override
-  State<pesawatpage> createState() => _PesawatPageState();
+  State<kapalpage> createState() => _KapalPageState();
 }
 
-class _PesawatPageState extends State<pesawatpage> {
+class _KapalPageState extends State<kapalpage> {
   // Controller untuk mengambil input dari TextField
   final namaPenumpangController = TextEditingController();
   final nomorTeleponController = TextEditingController();
+
+  DateTime? tanggalBerangkat; // Variabel untuk tanggal berangkat
+  int? keberangkatanId; // Variabel untuk keberangkatan
+  int? tujuanId; // Variabel untuk tujuan
+  String? tipeKelas; // Variabel untuk tipe kelas
   int jumlahAnak = 0; // Variabel untuk jumlah anak
   int jumlahDewasa = 0; // Variabel untuk jumlah dewasa
+
+  // Fungsi untuk memilih tanggal
+  Future<void> pilihTanggal(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != tanggalBerangkat) {
+      setState(() {
+        tanggalBerangkat = picked;
+      });
+    }
+  }
 
   Future<int?> getUserId() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getInt('user_id');
-  }
-
-  Future<int?> gettransportId() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getInt('id_transport');
   }
 
   // Fungsi untuk mengirim data ke API
@@ -38,8 +53,7 @@ class _PesawatPageState extends State<pesawatpage> {
       return;
     }
 
-    final url =
-        Uri.http(AppConfig.API_HOST, '/tiket_go/pesawat/input_data_ps.php');
+    final url = Uri.http(AppConfig.API_HOST, '/tiket_go/kapal/input_data.php');
     final response = await http.post(
       url,
       headers: {"Content-Type": "application/json"},
@@ -47,55 +61,26 @@ class _PesawatPageState extends State<pesawatpage> {
         "user_id": userId, // Ganti dengan user_id yang sesuai
         "nama_penumpang": namaPenumpangController.text, // Ambil dari TextField
         "nomor_telepon": nomorTeleponController.text, // Ambil dari TextField
+        "tanggal_berangkat": tanggalBerangkat?.toIso8601String().split("T")[0],
+        "keberangkatan_id":
+            keberangkatanId, // Ambil dari dropdown keberangkatan
+        "tujuan_id": tujuanId, // Ambil dari dropdown tujuan
+        "tipe_kelas": tipeKelas, // Ambil dari dropdown tipe kelas
         "jumlah_anak": jumlahAnak,
         "jumlah_dewasa": jumlahDewasa,
       }),
     );
 
-    if (response.statusCode == 200) {
-      print('Response Body: ${response.body}');
-      try {
-        final data = jsonDecode(response.body);
-        final idPemesanan = data['id_pemesanan'];
-        if (idPemesanan == null) {
-          print("Error: id_pemesanan tidak ditemukan");
-          return;
-        }
-        print("Data berhasil disimpan: $data");
-        await kirimKeTransaksi(idPemesanan);
-      } catch (e) {
-        print("Kesalahan parsing JSON: ${response.body}");
-      }
+    /*if (response.statusCode == 200) {
+      // Jika berhasil, navigasi ke halaman tiket atau tampilkan pesan sukses
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
     } else {
-      print("Error: ${response.statusCode}, ${response.body}");
-    }
-  }
-
-  Future<void> kirimKeTransaksi(int idPemesanan) async {
-    final tUser = await gettransportId();
-    if (tUser == null) {
-      // Tangani jika user_id tidak ditemukan (misalnya, user belum login)
-      print("Sepertinya masih ada masalah");
-      return;
-    }
-
-    final urlTransaksi =
-        Uri.http(AppConfig.API_HOST, '/tiket_go/pesawat/transaksi.php');
-    final response = await http.post(
-      urlTransaksi,
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode({
-        "id_pemesanan": idPemesanan,
-        "id_transport": tUser,
-      }),
-    );
-
-    if (response.statusCode == 200) {
-      print("Transaksi berhasil disimpan");
-      // Bisa melakukan navigasi atau aksi lain setelah berhasil
-    } else {
-      print("Error saat menyimpan transaksi: ${response.body}");
-    }
+      // Jika gagal, tampilkan pesan error
+      print("Error: ${response.body}");
+    }*/
   }
 
   @override
