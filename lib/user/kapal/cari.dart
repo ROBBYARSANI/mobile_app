@@ -1,7 +1,6 @@
 import 'dart:convert';
-import 'package:tiket/user/kapal/bayar.dart';
 import 'package:tiket/util/config/config.dart';
-import 'package:tiket/user/pesawat/daftartiket.dart';
+import 'package:tiket/user/kapal/daftartiket.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -47,8 +46,7 @@ class _kapalpagestate extends State<kapalpage> {
       return;
     }
 
-    final Uri url =
-        Uri.http(AppConfig.API_HOST, '/tiket_go/pesawat/cari_ps.php');
+    final Uri url = Uri.http(AppConfig.API_HOST, '/tiket_go/kapal/cari_kp.php');
 
     try {
       final response = await http.post(
@@ -316,14 +314,7 @@ class _kapalpagestate extends State<kapalpage> {
                         borderRadius: BorderRadius.circular(50.0),
                       ),
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PaymentPage(),
-                        ),
-                      );
-                    },
+                    onPressed: cariTiket,
                     child: const Text(
                       "Cari",
                       style: TextStyle(

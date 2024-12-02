@@ -82,7 +82,7 @@ class _PesawatPageState extends State<pesawatpage> {
     }
 
     final urlTransaksi =
-        Uri.http(AppConfig.API_HOST, '/tiket_go/pesawat/transaksi.php');
+        Uri.http(AppConfig.API_HOST, '/tiket_go/pesawat/transaksi_ps.php');
     final response = await http.post(
       urlTransaksi,
       headers: {"Content-Type": "application/json"},
