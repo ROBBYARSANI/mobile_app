@@ -563,44 +563,6 @@ class TicketCard extends StatelessWidget {
                   ),
                 ),
               ],
-            ), // Jarak antar elemen
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      padding: const EdgeInsets.symmetric(vertical: 15.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50.0),
-                      ),
-                    ),
-                    onPressed: () async {
-                      int transportId = tiket['id']; // Contoh ID transportasi
-                      await saveTicketId(
-                          transportId); // Menyimpan ID ke SharedPreferences
-
-                      print('id: $transportId');
-
-                      // Navigasi ke halaman pesawatpage
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const pesawatpage(),
-                        ),
-                      );
-                    },
-                    child: const Text(
-                      "Pesan",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
             ),
           ),
         ],
