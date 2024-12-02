@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tiket/user/pesawat/bayar.dart';
+import 'package:tiket/user/pesawat/checkin.dart';
 import 'package:tiket/util/config/config.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -97,6 +99,9 @@ class _PesawatPageState extends State<pesawatpage> {
       print("Error saat menyimpan transaksi: ${response.body}");
     }
   }
+
+  // Tambahkan state baru untuk menyimpan status switch
+  bool pilih = false;
 
   @override
   Widget build(BuildContext context) {
@@ -259,6 +264,30 @@ class _PesawatPageState extends State<pesawatpage> {
                   ],
                 ),
               ),
+
+              // Tambahkan Switch di sini
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Pilih kursi sekarang",
+                      style: TextStyle(fontSize: 14),
+                    ),
+                    Switch(
+                      value: pilih,
+                      onChanged: (bool value) {
+                        setState(() {
+                          pilih = value;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 50),
+
               // Button Checkout
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -266,14 +295,27 @@ class _PesawatPageState extends State<pesawatpage> {
                   width: double.infinity,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
+                      backgroundColor: pilih ? Colors.blue : Colors.blue,
                       padding: const EdgeInsets.symmetric(vertical: 15.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50.0),
                       ),
                     ),
                     onPressed: () {
-                      pesanTiket(); // Memanggil fungsi pesanTiket saat tombol diklik
+                      if (pilih) {
+                        // Navigasi ke halaman CheckIn
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Checkin()),
+                        );
+                      } else {
+                        // Navigasi ke halaman Payment
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PaymentPage()),
+                        );
+                      }
                     },
                     child: const Text(
                       "Pesan",
