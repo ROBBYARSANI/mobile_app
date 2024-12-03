@@ -58,9 +58,9 @@ class _LogPesananPageState extends State<LogPesananPage> {
     }
   }
 
-  Future<void> _deletePesanan(String idTransaksi) async {
-    final url = Uri.http(AppConfig.API_HOST, '/tiket_go/admin/hapus_log.php',
-        {'id_transaksi': idTransaksi});
+  Future<void> _deletePesanan(String id) async {
+    final url = Uri.http(
+        AppConfig.API_HOST, '/tiket_go/admin/hapus_log.php', {'id': id});
 
     try {
       final response = await http.get(url);
@@ -69,8 +69,7 @@ class _LogPesananPageState extends State<LogPesananPage> {
       if (data['status']) {
         // Jika berhasil, hapus data dari list dan beri notifikasi
         setState(() {
-          _pesananList
-              .removeWhere((item) => item['id_transaksi'] == idTransaksi);
+          _pesananList.removeWhere((item) => item['id_transaksi'] == id);
         });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Data berhasil dihapus.')),

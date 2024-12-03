@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:tiket/util/config/config.dart';
+import 'package:tiket/user/kapal/berhasil.dart';
 
 class PasswordInputPage extends StatefulWidget {
   @override
@@ -59,7 +60,11 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(data['message'])),
       );
-      Navigator.pop(context); // Contoh: kembali ke halaman sebelumnya
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => SuccessPage()), // Navigasi ke SuccessPage
+      ); // Contoh: kembali ke halaman sebelumnya
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(data['message'])),

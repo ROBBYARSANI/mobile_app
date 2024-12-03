@@ -95,6 +95,19 @@ class _PesawatPageState extends State<pesawatpage> {
     if (response.statusCode == 200) {
       print("Transaksi berhasil disimpan");
       // Bisa melakukan navigasi atau aksi lain setelah berhasil
+      if (pilih) {
+        // Navigasi ke halaman CheckIn
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Checkin()),
+        );
+      } else {
+        // Navigasi ke halaman Payment
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => PaymentPage()),
+        );
+      }
     } else {
       print("Error saat menyimpan transaksi: ${response.body}");
     }
@@ -302,20 +315,7 @@ class _PesawatPageState extends State<pesawatpage> {
                       ),
                     ),
                     onPressed: () {
-                      if (pilih) {
-                        // Navigasi ke halaman CheckIn
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Checkin()),
-                        );
-                      } else {
-                        // Navigasi ke halaman Payment
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PaymentPage()),
-                        );
-                      }
+                      pesanTiket();
                     },
                     child: const Text(
                       "Pesan",

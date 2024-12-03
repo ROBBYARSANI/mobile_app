@@ -48,7 +48,7 @@ class _PaymentPageState extends State<PaymentPage> {
     }
 
     final uri = Uri.http(AppConfig.API_HOST,
-        '/tiket_go/Pesawat/bayar_ps.php'); // Sesuaikan dengan endpoint Anda
+        '/tiket_go/pesawat/bayar_ps.php'); // Sesuaikan dengan endpoint Anda
 
     // Kirim user_id sebagai parameter dalam body
     final response = await http.post(
