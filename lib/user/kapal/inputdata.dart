@@ -96,7 +96,6 @@ class _KapalPageState extends State<datakapal> {
         context,
         MaterialPageRoute(builder: (context) => PaymentPage()),
       );
-      // Bisa melakukan navigasi atau aksi lain setelah berhasil
     } else {
       print("Error saat menyimpan transaksi: ${response.body}");
     }
