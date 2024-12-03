@@ -27,7 +27,7 @@ class _PaymentPageState extends State<PaymentPage> {
                 },
               ),
               ListTile(
-                title: Text("Mandiri"),
+                title: Text("OVO"),
                 onTap: () {
                   setState(() {
                     selectedPaymentMethod = "Mandiri";
@@ -36,10 +36,28 @@ class _PaymentPageState extends State<PaymentPage> {
                 },
               ),
               ListTile(
-                title: Text("BCA"),
+                title: Text("DANA"),
                 onTap: () {
                   setState(() {
                     selectedPaymentMethod = "BCA";
+                  });
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text("SHOPEEPAY"),
+                onTap: () {
+                  setState(() {
+                    selectedPaymentMethod = "GOPAY";
+                  });
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text("PAYPAL"),
+                onTap: () {
+                  setState(() {
+                    selectedPaymentMethod = "GOPAY";
                   });
                   Navigator.pop(context);
                 },
