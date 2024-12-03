@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:tiket/util/config/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tiket/user/kapal/konfirmasi.dart';
 
 class PaymentPage extends StatefulWidget {
   const PaymentPage({super.key});
@@ -92,12 +93,12 @@ class _PaymentPageState extends State<PaymentPage> {
       context: context,
       builder: (BuildContext context) {
         return Container(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                title: Text("GOPAY"),
+                title: const Text("GOPAY"),
                 onTap: () {
                   setState(() {
                     selectedPaymentMethod = "GOPAY";
@@ -106,19 +107,19 @@ class _PaymentPageState extends State<PaymentPage> {
                 },
               ),
               ListTile(
-                title: Text("Mandiri"),
+                title: const Text("PayPall"),
                 onTap: () {
                   setState(() {
-                    selectedPaymentMethod = "Mandiri";
+                    selectedPaymentMethod = "PayPall";
                   });
                   Navigator.pop(context);
                 },
               ),
               ListTile(
-                title: Text("BCA"),
+                title: const Text("Dana"),
                 onTap: () {
                   setState(() {
-                    selectedPaymentMethod = "BCA";
+                    selectedPaymentMethod = "Dana";
                   });
                   Navigator.pop(context);
                 },
@@ -135,9 +136,9 @@ class _PaymentPageState extends State<PaymentPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.lightBlue,
-        title: Text('Pembayaran', style: TextStyle(color: Colors.white)),
+        title: const Text('Pembayaran', style: TextStyle(color: Colors.white)),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             // Navigasi kembali
           },
@@ -146,15 +147,16 @@ class _PaymentPageState extends State<PaymentPage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: isLoading
-            ? Center(child: CircularProgressIndicator())
+            ? const Center(child: CircularProgressIndicator())
             : hasError
-                ? Center(child: Text('Terjadi kesalahan saat mengambil data'))
+                ? const Center(
+                    child: Text('Terjadi kesalahan saat mengambil data'))
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Data Pengguna
                       Container(
-                        padding: EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(16.0),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(8.0),
@@ -173,15 +175,16 @@ class _PaymentPageState extends State<PaymentPage> {
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.bold)),
                             const SizedBox(height: 8),
-                            Text(userName, style: TextStyle(fontSize: 15)),
-                            SizedBox(height: 16),
+                            Text(userName,
+                                style: const TextStyle(fontSize: 15)),
+                            const SizedBox(height: 16),
                             Row(
                               children: [
                                 const Text("NIK",
                                     style: TextStyle(fontSize: 15)),
                                 const SizedBox(width: 16),
                                 Text(userNik,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.bold)),
                               ],
@@ -189,11 +192,11 @@ class _PaymentPageState extends State<PaymentPage> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
 
                       // Rincian Harga
                       Container(
-                        padding: EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(16.0),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(8.0),
@@ -208,32 +211,32 @@ class _PaymentPageState extends State<PaymentPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Rincian Harga",
+                            const Text("Rincian Harga",
                                 style: TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.bold)),
-                            SizedBox(height: 10),
-                            Text("Harga yang harus anda bayar"),
+                            const SizedBox(height: 10),
+                            const Text("Harga yang harus anda bayar"),
                             Text("Taksaka Tambahan (Dewasa) x$jumlahDewasa",
-                                style: TextStyle(color: Colors.grey)),
-                            Row(
+                                style: const TextStyle(color: Colors.grey)),
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             ),
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text("+ Asuransi Perjalanan"),
                                 Text("RP 34.000"),
                               ],
                             ),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("Total",
+                                const Text("Total",
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold)),
                                 Text("RP ${hargaJual * jumlahDewasa + 34000}",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.blue,
                                         fontWeight: FontWeight.bold)),
                               ],
@@ -241,15 +244,16 @@ class _PaymentPageState extends State<PaymentPage> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
 
                       // metode pembayaran
-                      Text("Metode Pembayaran", style: TextStyle(fontSize: 16)),
-                      SizedBox(height: 10),
+                      const Text("Metode Pembayaran",
+                          style: TextStyle(fontSize: 16)),
+                      const SizedBox(height: 10),
                       GestureDetector(
                         onTap: _showPaymentOptions,
                         child: Container(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 12.0),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
@@ -259,27 +263,32 @@ class _PaymentPageState extends State<PaymentPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(selectedPaymentMethod,
-                                  style: TextStyle(fontSize: 16)),
-                              Icon(Icons.arrow_drop_down),
+                                  style: const TextStyle(fontSize: 16)),
+                              const Icon(Icons.arrow_drop_down),
                             ],
                           ),
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
 
                       Center(
                         child: ElevatedButton(
                           onPressed: () {
                             // Logika bayar
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PasswordInputPage()),
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.lightBlue,
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 50, vertical: 15),
-                            textStyle: TextStyle(
+                            textStyle: const TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
-                          child: Text("Bayar"),
+                          child: const Text("Bayar"),
                         ),
                       ),
                     ],

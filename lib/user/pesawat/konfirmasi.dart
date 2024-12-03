@@ -1,18 +1,8 @@
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: PasswordInputPage(),
-    );
-  }
-}
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+import 'package:tiket/util/config/config.dart';
 
 class PasswordInputPage extends StatefulWidget {
   @override
@@ -22,11 +12,59 @@ class PasswordInputPage extends StatefulWidget {
 class _PasswordInputPageState extends State<PasswordInputPage> {
   final TextEditingController _passwordController = TextEditingController();
   bool _obscureText = true;
+  int? userId;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserId();
+  }
 
   @override
   void dispose() {
     _passwordController.dispose();
     super.dispose();
+  }
+
+  Future<void> _loadUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userId = prefs.getInt('user_id');
+    });
+  }
+
+  Future<void> _validatePassword() async {
+    if (userId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Gagal mendapatkan ID pengguna')),
+      );
+      return;
+    }
+
+    // Menggunakan Uri.http
+    final url = Uri.http(AppConfig.API_HOST,
+        'tiket_go/pesawat/konfirmasi_ps.php'); //http://localhost/tiket_go/kapal/konfirmasi_kp.php
+    final response = await http.post(
+      url,
+      body: jsonEncode({
+        'user_id': userId,
+        'password': _passwordController.text,
+      }),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    final data = jsonDecode(response.body);
+
+    if (data['status']) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(data['message'])),
+      );
+      Navigator.pop(context); // Contoh: kembali ke halaman sebelumnya
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(data['message'])),
+      );
+    }
   }
 
   @override
@@ -80,16 +118,13 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                // Logika untuk login atau validasi password
-                print("Password: ${_passwordController.text}");
-              },
+              onPressed: _validatePassword,
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,
                 minimumSize: Size(double.infinity, 50),
-                backgroundColor: Colors.blue, // Warna teks putih
+                backgroundColor: Colors.blue,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8), // Sudut membulat
+                  borderRadius: BorderRadius.circular(8),
                 ),
               ),
               child: Text(

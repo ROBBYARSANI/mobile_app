@@ -74,7 +74,6 @@ class _KeretaPageState extends State<datakereta> {
   Future<void> kirimKeTransaksi(int idPemesanan) async {
     final tUser = await gettransportId();
     if (tUser == null) {
-      // Tangani jika user_id tidak ditemukan (misalnya, user belum login)
       print("Sepertinya masih ada masalah");
       return;
     }
@@ -92,7 +91,9 @@ class _KeretaPageState extends State<datakereta> {
 
     if (response.statusCode == 200) {
       print("Transaksi berhasil disimpan");
-      // Bisa melakukan navigasi atau aksi lain setelah berhasil
+      /*Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => PaymentPage()),*/
     } else {
       print("Error saat menyimpan transaksi: ${response.body}");
     }
