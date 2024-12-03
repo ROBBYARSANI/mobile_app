@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiket/util/config/config.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:tiket/user/kapal/bayar.dart';
 //import 'package:tiket/user/pesawat/daftartiket.dart';
 
 class datakapal extends StatefulWidget {
@@ -74,7 +75,6 @@ class _KapalPageState extends State<datakapal> {
   Future<void> kirimKeTransaksi(int idPemesanan) async {
     final tUser = await gettransportId();
     if (tUser == null) {
-      // Tangani jika user_id tidak ditemukan (misalnya, user belum login)
       print("Sepertinya masih ada masalah");
       return;
     }
@@ -92,6 +92,10 @@ class _KapalPageState extends State<datakapal> {
 
     if (response.statusCode == 200) {
       print("Transaksi berhasil disimpan");
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => PaymentPage()),
+      );
       // Bisa melakukan navigasi atau aksi lain setelah berhasil
     } else {
       print("Error saat menyimpan transaksi: ${response.body}");
