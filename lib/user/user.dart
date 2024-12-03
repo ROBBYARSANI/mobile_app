@@ -108,31 +108,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
 
-                // Search Box
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(168, 107, 207, 237)
-                        .withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  height: 50,
-                  child: const Row(
-                    children: [
-                      Icon(Icons.search, color: Colors.white),
-                      SizedBox(width: 10),
-                      Text(
-                        "Cari kota tujuanmu disini?",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
                 const SizedBox(height: 10),
 
                 // Banner Image
