@@ -8,6 +8,7 @@ import 'package:tiket/user/kapal/cari.dart';
 import 'package:tiket/user/user.dart';
 import 'package:tiket/user/pesawat/checkin.dart';
 import 'package:tiket/user/pesawat/checkin.dart';
+import 'package:tiket/user/pesawat/bayar_c.dart';
 
 import 'login.dart';
 

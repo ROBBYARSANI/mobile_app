@@ -3,7 +3,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiket/util/config/config.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:tiket/user/kereta/bayar.dart';
 import 'package:tiket/user/kereta/checkin.dart';
 //import 'package:tiket/user/pesawat/daftartiket.dart';
 

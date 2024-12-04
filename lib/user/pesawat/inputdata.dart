@@ -94,13 +94,16 @@ class _PesawatPageState extends State<pesawatpage> {
 
     if (response.statusCode == 200) {
       print("Transaksi berhasil disimpan");
-      // Bisa melakukan navigasi atau aksi lain setelah berhasil
+
       if (pilih) {
-        // Navigasi ke halaman CheckIn
-        /*Navigator.push(
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setInt('id_pemesanan', idPemesanan); // Simpan id_pemesanan
+
+        Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Checkin()),
-        );*/
+          MaterialPageRoute(
+              builder: (context) => PilihKursiView() /*PaymentPage()*/),
+        );
       } else {
         // Navigasi ke halaman Payment
         Navigator.push(
