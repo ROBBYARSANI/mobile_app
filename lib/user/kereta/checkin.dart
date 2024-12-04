@@ -133,10 +133,16 @@ class _PilihKursiViewState extends State<PilihKursiView> {
         title: Text(
           'Pilih Kursi',
           style: TextStyle(
-            color: Colors.white, // Warna teks putih
+            color: Colors.white,
           ),
         ),
         backgroundColor: Colors.blue,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pop(context); // Kembali ke halaman sebelumnya
+          },
+        ),
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
@@ -146,8 +152,7 @@ class _PilihKursiViewState extends State<PilihKursiView> {
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: Column(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start, // Align ke kiri
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         namaKereta,
@@ -194,6 +199,26 @@ class _PilihKursiViewState extends State<PilihKursiView> {
                         ),
                       );
                     },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/IsiDataPage');
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue, // Warna biru
+                        padding: EdgeInsets.symmetric(vertical: 15),
+                        textStyle: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      child: Text('Pilih'),
+                    ),
                   ),
                 ),
               ],

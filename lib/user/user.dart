@@ -4,6 +4,7 @@ import 'package:tiket/login.dart';
 import 'package:tiket/user/kapal/cari.dart';
 import 'package:tiket/user/kereta/cari.dart';
 import 'package:tiket/user/pesawat/cari.dart';
+import 'package:tiket/user/riwayat.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,6 +15,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String _userEmail = "User"; // Nilai default sementara
+  int _selectedIndex = 0; // Untuk mengelola navigasi
 
   @override
   void initState() {
@@ -29,21 +31,57 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  // Fungsi untuk berpindah halaman berdasarkan menu yang dipilih
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    // Menentukan tampilan berdasarkan menu yang dipilih
+    final List<Widget> _pages = [
+      _buildHomePage(context),
+      const Riwayat(),
+    ];
+
     return Scaffold(
-      body: Stack(
-        children: [
-          // Background
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/bg_home_wave.jpg'),
-                fit: BoxFit.cover,
-              ),
+      body: _pages[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.history),
+            label: 'Riwayat',
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Tampilan halaman Home
+  Widget _buildHomePage(BuildContext context) {
+    return Stack(
+      children: [
+        // Background
+        Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/bg_home_wave.jpg'),
+              fit: BoxFit.cover,
             ),
           ),
-          Padding(
+        ),
+        SingleChildScrollView(
+          child: Padding(
             padding: const EdgeInsets.only(top: 10),
             child: Column(
               children: [
@@ -68,46 +106,40 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: SingleChildScrollView(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      "Selamat Datang",
-                                      style: TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 78, 119, 208),
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    Text(
-                                      _userEmail,
-                                      style: const TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 93, 141, 254),
-                                        fontSize: 26,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
+                                const Text(
+                                  "Selamat Datang",
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 78, 119, 208),
+                                    fontSize: 16,
+                                  ),
                                 ),
-                                const CircleAvatar(
-                                  backgroundImage:
-                                      AssetImage('assets/tiketgo.png'),
-                                  radius: 25,
+                                Text(
+                                  _userEmail,
+                                  style: const TextStyle(
+                                    color: Color.fromARGB(255, 93, 141, 254),
+                                    fontSize: 26,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ],
-                            )),
+                            ),
+                            const CircleAvatar(
+                              backgroundImage: AssetImage('assets/tiketgo.png'),
+                              radius: 25,
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(height: 20),
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 10),
 
                 // Banner Image
@@ -141,38 +173,38 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 10),
 
                 // List Transport
-                Expanded(
-                  child: ListView(
-                    children: [
-                      transportCard(
-                        context,
-                        'Pesawat',
-                        'Transportasi Udara',
-                        'assets/ic_plane.png',
-                        const pesawatpage(),
-                      ),
-                      transportCard(
-                        context,
-                        'Kapal Laut',
-                        'Transportasi Laut',
-                        'assets/ic_ship.png',
-                        const kapalpage(),
-                      ),
-                      transportCard(
-                        context,
-                        'Kereta',
-                        'Transportasi Darat',
-                        'assets/ic_train.png',
-                        const keretapage(),
-                      ),
-                    ],
-                  ),
+                ListView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  children: [
+                    transportCard(
+                      context,
+                      'Pesawat',
+                      'Transportasi Udara',
+                      'assets/ic_plane.png',
+                      const pesawatpage(),
+                    ),
+                    transportCard(
+                      context,
+                      'Kapal Laut',
+                      'Transportasi Laut',
+                      'assets/ic_ship.png',
+                      const kapalpage(),
+                    ),
+                    transportCard(
+                      context,
+                      'Kereta',
+                      'Transportasi Darat',
+                      'assets/ic_train.png',
+                      const keretapage(),
+                    ),
+                  ],
                 ),
               ],
             ),
-          )
-        ],
-      ),
+          ),
+        ),
+      ],
     );
   }
 
