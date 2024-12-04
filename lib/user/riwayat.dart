@@ -89,7 +89,7 @@ class _riwayatState extends State<Riwayat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Log Pesanan')),
+      appBar: AppBar(title: const Text('Riwayat Pesanan')),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : _pesananList.isEmpty
