@@ -97,10 +97,10 @@ class _PesawatPageState extends State<pesawatpage> {
       // Bisa melakukan navigasi atau aksi lain setelah berhasil
       if (pilih) {
         // Navigasi ke halaman CheckIn
-        Navigator.push(
+        /*Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => Checkin()),
-        );
+        );*/
       } else {
         // Navigasi ke halaman Payment
         Navigator.push(

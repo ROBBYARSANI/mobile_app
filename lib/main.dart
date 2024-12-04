@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:tiket/user/kereta/konfirmasi.dart';
 import 'package:tiket/user/pesawat/cari.dart';
 //import 'package:tiket/user/pesawat/inputdata.dart';
@@ -6,7 +8,8 @@ import 'package:tiket/user/kapal/inputdata.dart';
 import 'package:tiket/admin/admin.dart';
 import 'package:tiket/user/kapal/cari.dart';
 import 'package:tiket/user/user.dart';
-import 'package:tiket/user/pesawat/checkin.dart';
+//import 'package:tiket/user/pesawat/checkin.dart';
+import 'package:tiket/user/kereta/checkin.dart';
 
 import 'login.dart';
 
@@ -26,8 +29,28 @@ class MyApp extends StatelessWidget {
       ),
       //infokan jika dibypass
       home:
-          const LoginScreen(), //LoginScreen(), //datakereta(), // Menetapkan LoginScreen sebagai halaman awa
+          PilihKursiView(), //LoginScreen(), //datakereta(), // Menetapkan LoginScreen sebagai halaman awa
       debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Halaman Utama'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            // Navigasi ke halaman pilih kursi
+            Get.to(() => PilihKursiView());
+          },
+          child: Text('Pilih Kursi'),
+        ),
+      ),
     );
   }
 }

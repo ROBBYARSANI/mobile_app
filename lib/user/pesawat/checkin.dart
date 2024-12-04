@@ -1,5 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'pilih_kursi_controller.dart';
+
+class PilihKursiView extends StatelessWidget {
+  final controller = Get.put(PilihKursiController());
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Pilih Kursi'),
+      ),
+      body: Obx(() {
+        if (controller.gerbong.isEmpty) {
+          return Center(child: CircularProgressIndicator());
+        }
+        return GridView.builder(
+          padding: EdgeInsets.all(20),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 4,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
+          ),
+          itemCount: controller.gerbong[controller.indexGerbong.value].length,
+          itemBuilder: (context, index) {
+            var kursi =
+                controller.gerbong[controller.indexGerbong.value][index];
+            return GestureDetector(
+              onTap: () => controller.selectKursi(index),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: kursi['status'] == "available"
+                      ? Colors.green
+                      : kursi['status'] == "selected"
+                          ? Colors.blue
+                          : Colors.red,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Center(child: Text(kursi['n_kursi'])),
+              ),
+            );
+          },
+        );
+      }),
+    );
+  }
+}
+
+/*import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class PilihTiketController extends GetxController {
   var indexGerbong = 0.obs;
@@ -323,4 +372,4 @@ class ItemStatus extends StatelessWidget {
       ],
     );
   }
-}
+}*/
