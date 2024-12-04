@@ -4,6 +4,7 @@ import 'package:tiket/util/config/config.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:tiket/user/kereta/bayar.dart';
+import 'package:tiket/user/kereta/checkin.dart';
 //import 'package:tiket/user/pesawat/daftartiket.dart';
 
 class datakereta extends StatefulWidget {
@@ -92,9 +93,13 @@ class _KeretaPageState extends State<datakereta> {
 
     if (response.statusCode == 200) {
       print("Transaksi berhasil disimpan");
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setInt('id_pemesanan', idPemesanan); // Simpan id_pemesanan
+
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => PaymentPage()),
+        MaterialPageRoute(
+            builder: (context) => PilihKursiView() /*PaymentPage()*/),
       );
     } else {
       print("Error saat menyimpan transaksi: ${response.body}");

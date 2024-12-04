@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tiket/user/kereta/bayar.dart';
 import 'package:tiket/util/config/config.dart';
 
 class PilihKursiView extends StatefulWidget {
@@ -12,13 +14,37 @@ class _PilihKursiViewState extends State<PilihKursiView> {
   List<Map<String, dynamic>> gerbong = [];
   bool isLoading = true;
 
-  String namaKereta = "Ambarawa Ekspres"; // Ganti sesuai nama kereta Anda
-  String kelasKereta = "Ekonomi"; // Ganti sesuai kelas kereta Anda
+  String namaKereta = ""; // Nama transportasi
+  String kelasKereta = ""; // Kelas transportasi
+  int idPemesanan = 0;
 
   @override
   void initState() {
     super.initState();
-    fetchKursi('A'); // Ambil data kursi untuk gerbong 'A'
+    _loadTransportData();
+  }
+
+  // Mengambil data nama transportasi dan kelas dari SharedPreferences
+  Future<void> _loadTransportData() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      namaKereta =
+          prefs.getString('nama_transport') ?? "Transportasi Tidak Diketahui";
+      kelasKereta = prefs.getString('kelas') ?? "Kelas Tidak Diketahui";
+      idPemesanan = prefs.getInt('id_pemesanan') ?? 0;
+    });
+
+    // Tentukan gerbong berdasarkan kelas
+    String gerbongName = "";
+    if (kelasKereta == "Ekonomi") {
+      gerbongName = "A";
+    } else if (kelasKereta == "Bisnis") {
+      gerbongName = "B";
+    } else if (kelasKereta == "Eksekutif") {
+      gerbongName = "C";
+    }
+
+    fetchKursi(gerbongName);
   }
 
   // Mengambil data kursi dari API
@@ -50,14 +76,17 @@ class _PilihKursiViewState extends State<PilihKursiView> {
   }
 
   // Memperbarui status kursi
-  Future<void> updateKursi(int id, String newStatus) async {
+  Future<void> updateKursi(int id, String newStatus, int idPemesanan) async {
     final Uri url =
         Uri.http(AppConfig.API_HOST, '/tiket_go/kereta/update_kursi.php');
     final response = await http.post(
       url,
       headers: {"Content-Type": "application/json"},
-      body: jsonEncode(
-          {"id_kursi": id, "status": newStatus == 'available' ? 1 : 0}),
+      body: jsonEncode({
+        "id_kursi": id,
+        "status": newStatus == 'available' ? 1 : 0,
+        "id_pemesanan": idPemesanan,
+      }),
     );
 
     if (response.statusCode == 200) {
@@ -72,6 +101,9 @@ class _PilihKursiViewState extends State<PilihKursiView> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Gagal mengirim permintaan update')));
+      print(id);
+      print(newStatus);
+      print(idPemesanan);
     }
   }
 
@@ -81,11 +113,17 @@ class _PilihKursiViewState extends State<PilihKursiView> {
     String newStatus =
         kursi['status'] == 'available' ? 'selected' : 'available';
 
-    await updateKursi(kursi['id'], newStatus);
+    await updateKursi(kursi['id'], newStatus, idPemesanan);
 
     setState(() {
       kursi['status'] = newStatus; // Update status kursi di aplikasi
     });
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PaymentPage(),
+      ),
+    );
   }
 
   @override
@@ -117,7 +155,7 @@ class _PilihKursiViewState extends State<PilihKursiView> {
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                           color: Colors.black87,
-                        ), // Teks rata kiri
+                        ),
                       ),
                       SizedBox(height: 5),
                       Text(
@@ -126,7 +164,6 @@ class _PilihKursiViewState extends State<PilihKursiView> {
                           fontSize: 18,
                           color: Colors.black54,
                         ),
-                        textAlign: TextAlign.left, // Teks rata kiri
                       ),
                     ],
                   ),

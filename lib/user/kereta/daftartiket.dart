@@ -259,9 +259,11 @@ class TicketCard extends StatelessWidget {
 
   const TicketCard({Key? key, required this.tiket}) : super(key: key);
 
-  Future<void> saveTicketId(int id) async {
+  Future<void> saveTicketId(int id, String namaTransport, String kelas) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setInt('id_transport', id); // Menyimpan ID sebagai int
+    prefs.setString('nama_transport', namaTransport);
+    prefs.setString('kelas', kelas);
   }
 
   @override
@@ -595,8 +597,10 @@ class TicketCard extends StatelessWidget {
                         onPressed: () async {
                           int transportId =
                               tiket['id']; // Contoh ID transportasi
-                          await saveTicketId(
-                              transportId); // Menyimpan ID ke SharedPreferences
+                          String namaTransport = tiket['nama_transport'];
+                          String kelas = tiket['kelas'];
+                          await saveTicketId(transportId, namaTransport,
+                              kelas); // Menyimpan ID ke SharedPreferences
 
                           print('id: $transportId');
 
