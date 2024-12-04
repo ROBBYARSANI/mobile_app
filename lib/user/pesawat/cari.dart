@@ -149,42 +149,55 @@ class _pesawatpagestate extends State<pesawatpage> {
                                   children: [
                                     const Text("Keberangkatan",
                                         style: TextStyle(fontSize: 14)),
-                                    DropdownButtonFormField<String>(
-                                      items: [
-                                        "Surabaya, Indonesia",
-                                        "Jakarta, Indonesia",
-                                        "Denpasar, Indonesia",
-                                        "Medan, Indonesia",
-                                        "Makassar, Indonesia",
-                                        "Yogyakarta, Indonesia",
-                                        "Bandung, Indonesia",
-                                        "Semarang, Indonesia",
-                                        "Balikpapan, Indonesia",
-                                        "Manado, Indonesia",
-                                        "Lombok, Indonesia",
-                                        "Malang, Indonesia",
-                                        "Palembang, Indonesia",
-                                        "Pekanbaru, Indonesia",
-                                        "Banjarmasin, Indonesia",
-                                        "Pontianak, Indonesia",
-                                        "Jayapura, Indonesia",
-                                        "Ambon, Indonesia",
-                                        "Ternate, Indonesia",
-                                        "Sorong, Indonesia",
-                                      ].map((String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(value),
-                                        );
-                                      }).toList(),
-                                      onChanged: (value) {
-                                        setState(() {
-                                          keberangkatan = value;
+                                    Autocomplete<String>(
+                                      optionsBuilder:
+                                          (TextEditingValue textEditingValue) {
+                                        if (textEditingValue.text.isEmpty) {
+                                          return const Iterable<String>.empty();
+                                        }
+                                        return [
+                                          "Surabaya, Indonesia",
+                                          "Jakarta, Indonesia",
+                                          "Denpasar, Indonesia",
+                                          "Medan, Indonesia",
+                                          "Makassar, Indonesia",
+                                          "Yogyakarta, Indonesia",
+                                          "Bandung, Indonesia",
+                                          "Semarang, Indonesia",
+                                          "Balikpapan, Indonesia",
+                                          "Manado, Indonesia",
+                                          "Lombok, Indonesia",
+                                          "Malang, Indonesia",
+                                          "Palembang, Indonesia",
+                                          "Pekanbaru, Indonesia",
+                                          "Banjarmasin, Indonesia",
+                                          "Pontianak, Indonesia",
+                                          "Jayapura, Indonesia",
+                                          "Ambon, Indonesia",
+                                          "Ternate, Indonesia",
+                                          "Sorong, Indonesia",
+                                        ].where((String option) {
+                                          return option.toLowerCase().contains(
+                                                textEditingValue.text
+                                                    .toLowerCase(),
+                                              );
                                         });
                                       },
-                                      decoration: const InputDecoration(
-                                        border: OutlineInputBorder(),
-                                      ),
+                                      onSelected: (String selection) {
+                                        setState(() {
+                                          keberangkatan = selection;
+                                        });
+                                      },
+                                      fieldViewBuilder: (context, controller,
+                                          focusNode, onFieldSubmitted) {
+                                        return TextField(
+                                          controller: controller,
+                                          focusNode: focusNode,
+                                          decoration: const InputDecoration(
+                                            border: OutlineInputBorder(),
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ],
                                 ),
@@ -199,48 +212,62 @@ class _pesawatpagestate extends State<pesawatpage> {
                                   children: [
                                     const Text("Tujuan",
                                         style: TextStyle(fontSize: 14)),
-                                    DropdownButtonFormField<String>(
-                                      items: [
-                                        "Surabaya, Indonesia",
-                                        "Jakarta, Indonesia",
-                                        "Denpasar, Indonesia",
-                                        "Medan, Indonesia",
-                                        "Makassar, Indonesia",
-                                        "Yogyakarta, Indonesia",
-                                        "Bandung, Indonesia",
-                                        "Semarang, Indonesia",
-                                        "Balikpapan, Indonesia",
-                                        "Manado, Indonesia",
-                                        "Lombok, Indonesia",
-                                        "Malang, Indonesia",
-                                        "Palembang, Indonesia",
-                                        "Pekanbaru, Indonesia",
-                                        "Banjarmasin, Indonesia",
-                                        "Pontianak, Indonesia",
-                                        "Jayapura, Indonesia",
-                                        "Ambon, Indonesia",
-                                        "Ternate, Indonesia",
-                                        "Sorong, Indonesia",
-                                      ].map((String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(value),
-                                        );
-                                      }).toList(),
-                                      onChanged: (value) {
-                                        setState(() {
-                                          tujuan = value;
+                                    Autocomplete<String>(
+                                      optionsBuilder:
+                                          (TextEditingValue textEditingValue) {
+                                        if (textEditingValue.text.isEmpty) {
+                                          return const Iterable<String>.empty();
+                                        }
+                                        return [
+                                          "Surabaya, Indonesia",
+                                          "Jakarta, Indonesia",
+                                          "Denpasar, Indonesia",
+                                          "Medan, Indonesia",
+                                          "Makassar, Indonesia",
+                                          "Yogyakarta, Indonesia",
+                                          "Bandung, Indonesia",
+                                          "Semarang, Indonesia",
+                                          "Balikpapan, Indonesia",
+                                          "Manado, Indonesia",
+                                          "Lombok, Indonesia",
+                                          "Malang, Indonesia",
+                                          "Palembang, Indonesia",
+                                          "Pekanbaru, Indonesia",
+                                          "Banjarmasin, Indonesia",
+                                          "Pontianak, Indonesia",
+                                          "Jayapura, Indonesia",
+                                          "Ambon, Indonesia",
+                                          "Ternate, Indonesia",
+                                          "Sorong, Indonesia",
+                                        ].where((String option) {
+                                          return option.toLowerCase().contains(
+                                                textEditingValue.text
+                                                    .toLowerCase(),
+                                              );
                                         });
                                       },
-                                      decoration: const InputDecoration(
-                                        border: OutlineInputBorder(),
-                                      ),
+                                      onSelected: (String selection) {
+                                        setState(() {
+                                          tujuan = selection;
+                                        });
+                                      },
+                                      fieldViewBuilder: (context, controller,
+                                          focusNode, onFieldSubmitted) {
+                                        return TextField(
+                                          controller: controller,
+                                          focusNode: focusNode,
+                                          decoration: const InputDecoration(
+                                            border: OutlineInputBorder(),
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ],
                                 ),
                               ),
                             ],
                           ),
+
                           const SizedBox(height: 20),
 
                           // Jumlah Tiket Dewasa

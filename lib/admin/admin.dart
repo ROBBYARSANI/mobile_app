@@ -67,7 +67,7 @@ class AdminScreen extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 10),
                             child: IconButton(
-                              icon: const Icon(Icons.arrow_back),
+                              icon: const Icon(Icons.logout),
                               onPressed: () => Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => const LoginScreen(),

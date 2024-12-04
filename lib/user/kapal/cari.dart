@@ -148,32 +148,44 @@ class _kapalpagestate extends State<kapalpage> {
                                   children: [
                                     const Text("Keberangkatan",
                                         style: TextStyle(fontSize: 14)),
-                                    DropdownButtonFormField<String>(
-                                      items: [
-                                        "Surabaya",
-                                        "Bali",
-                                        "Jakarta",
-                                        "Medan",
-                                        "Makassar",
-                                        "Yogyakarta",
-                                        "Bandung",
-                                        "Singapore",
-                                        "Kuala Lumpur",
-                                        "Sydney"
-                                      ].map((String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(value),
-                                        );
-                                      }).toList(),
-                                      onChanged: (value) {
-                                        setState(() {
-                                          keberangkatan = value;
+                                    Autocomplete<String>(
+                                      optionsBuilder:
+                                          (TextEditingValue textEditingValue) {
+                                        if (textEditingValue.text.isEmpty) {
+                                          return const Iterable<String>.empty();
+                                        }
+                                        return [
+                                          "Surabaya",
+                                          "Bali",
+                                          "Jakarta",
+                                          "Medan",
+                                          "Makassar",
+                                          "Yogyakarta",
+                                          "Bandung",
+                                          "Singapore",
+                                          "Kuala Lumpur",
+                                          "Sydney"
+                                        ].where((String option) {
+                                          return option.toLowerCase().contains(
+                                              textEditingValue.text
+                                                  .toLowerCase());
                                         });
                                       },
-                                      decoration: const InputDecoration(
-                                        border: OutlineInputBorder(),
-                                      ),
+                                      onSelected: (String selection) {
+                                        setState(() {
+                                          keberangkatan = selection;
+                                        });
+                                      },
+                                      fieldViewBuilder: (context, controller,
+                                          focusNode, onFieldSubmitted) {
+                                        return TextField(
+                                          controller: controller,
+                                          focusNode: focusNode,
+                                          decoration: const InputDecoration(
+                                            border: OutlineInputBorder(),
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ],
                                 ),
@@ -188,38 +200,51 @@ class _kapalpagestate extends State<kapalpage> {
                                   children: [
                                     const Text("Tujuan",
                                         style: TextStyle(fontSize: 14)),
-                                    DropdownButtonFormField<String>(
-                                      items: [
-                                        "Surabaya",
-                                        "Bali",
-                                        "Jakarta",
-                                        "Medan",
-                                        "Makassar",
-                                        "Yogyakarta",
-                                        "Bandung",
-                                        "Singapore",
-                                        "Kuala Lumpur",
-                                        "Sydney"
-                                      ].map((String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(value),
-                                        );
-                                      }).toList(),
-                                      onChanged: (value) {
-                                        setState(() {
-                                          tujuan = value;
+                                    Autocomplete<String>(
+                                      optionsBuilder:
+                                          (TextEditingValue textEditingValue) {
+                                        if (textEditingValue.text.isEmpty) {
+                                          return const Iterable<String>.empty();
+                                        }
+                                        return [
+                                          "Surabaya",
+                                          "Bali",
+                                          "Jakarta",
+                                          "Medan",
+                                          "Makassar",
+                                          "Yogyakarta",
+                                          "Bandung",
+                                          "Singapore",
+                                          "Kuala Lumpur",
+                                          "Sydney"
+                                        ].where((String option) {
+                                          return option.toLowerCase().contains(
+                                              textEditingValue.text
+                                                  .toLowerCase());
                                         });
                                       },
-                                      decoration: const InputDecoration(
-                                        border: OutlineInputBorder(),
-                                      ),
+                                      onSelected: (String selection) {
+                                        setState(() {
+                                          tujuan = selection;
+                                        });
+                                      },
+                                      fieldViewBuilder: (context, controller,
+                                          focusNode, onFieldSubmitted) {
+                                        return TextField(
+                                          controller: controller,
+                                          focusNode: focusNode,
+                                          decoration: const InputDecoration(
+                                            border: OutlineInputBorder(),
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ],
                                 ),
                               ),
                             ],
                           ),
+
                           const SizedBox(height: 20),
 
                           // Jumlah Tiket Dewasa

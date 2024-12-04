@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:tiket/user/kapal/bayar.dart';
 import 'package:tiket/user/kereta/konfirmasi.dart';
 import 'package:tiket/user/pesawat/cari.dart';
 //import 'package:tiket/user/pesawat/inputdata.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
       ),
       //infokan jika dibypass
       home:
-          PilihKursiView(), //LoginScreen(), //datakereta(), // Menetapkan LoginScreen sebagai halaman awa
+          datakapal(), //LoginScreen(), //datakereta(), // Menetapkan LoginScreen sebagai halaman awa
       debugShowCheckedModeBanner: false,
     );
   }

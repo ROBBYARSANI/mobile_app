@@ -180,7 +180,13 @@ class _PilihKursiViewState extends State<PilihKursiView> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      child: Text('Pilih'),
+                      child: const Text(
+                        "Pilih",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ),
