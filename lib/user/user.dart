@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // Menentukan tampilan berdasarkan menu yang dipilih
     final List<Widget> _pages = [
       _buildHomePage(context),
-      const Riwayat(),
+      const LogPesananPage(),
     ];
 
     return Scaffold(
