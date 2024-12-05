@@ -287,7 +287,7 @@ class TicketCard extends StatelessWidget {
                       children: [
                         Image.asset(
                           //diganti dengan logo pada db
-                          tiket['logo'] ?? '',
+                          'assets/ic_ship.png',
                           width: 24,
                           height: 24,
                         ),

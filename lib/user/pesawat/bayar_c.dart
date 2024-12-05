@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:tiket/util/config/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tiket/user/kapal/konfirmasi.dart';
+import 'package:tiket/user/pesawat/konfirmasi.dart';
 
 class PaymentPage extends StatefulWidget {
   const PaymentPage({super.key});
@@ -49,7 +49,7 @@ class _PaymentPageState extends State<PaymentPage> {
     }
 
     final uri = Uri.http(AppConfig.API_HOST,
-        '/tiket_go/pesawat/bayar_ps.php'); // Sesuaikan dengan endpoint Anda
+        '/tiket_go/pesawat/bayar_cps.php'); // Sesuaikan dengan endpoint Anda
 
     // Kirim user_id sebagai parameter dalam body
     final response = await http.post(
@@ -67,11 +67,11 @@ class _PaymentPageState extends State<PaymentPage> {
     try {
       if (responseData['status'] == true) {
         setState(() {
-          userName = responseData['data']['nama_penumpang'];
+          userName = responseData['data']['nama_penumpang'] ?? '';
           userNik = responseData['data']['nik'].toString();
-          jumlahDewasa = responseData['data']['jumlah_dewasa'];
+          jumlahDewasa = responseData['data']['jumlah_dewasa'] ?? 0;
           hargaJual = double.parse(responseData['data']['harga_jual']);
-          kursi = responseData['data']['n_kursi'];
+          kursi = responseData['data']['n_kursi'] ?? "Tidak ada kursi";
           isLoading = false;
         });
       } else {
@@ -232,6 +232,13 @@ class _PaymentPageState extends State<PaymentPage> {
                               children: [
                                 Text("+ Asuransi Perjalanan"),
                                 Text("RP 34.000"),
+                              ],
+                            ),
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("+ Pilih Kursi Online"),
+                                Text("RP 50.000"),
                               ],
                             ),
                             const SizedBox(height: 10),

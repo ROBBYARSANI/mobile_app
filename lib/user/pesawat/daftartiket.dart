@@ -5,20 +5,26 @@ import 'package:tiket/user/pesawat/inputdata.dart';
 
 String _getSingkatan(String kota) {
   final Map<String, String> singkatanKota = {
-    'Surabaya': 'SBY',
-    'Jakarta': 'JKT',
-    'Bandung': 'BDG',
-    'Yogyakarta': 'YOG',
-    'Medan': 'MDN',
-    'Makassar': 'MKS',
-    'Semarang': 'SMG',
-    'Denpasar': 'DPS',
-    'Balikpapan': 'BPN',
-    'Pontianak': 'PNK',
-    'Palembang': 'PLM',
-    'Padang': 'PDG',
-    'Manado': 'MND',
-    'Malang': 'MLG'
+    'Surabaya, Indonesia': 'SBY',
+    'Jakarta, Indonesia': 'JKT',
+    'Denpasar, Indonesia': 'DPS',
+    'Medan, Indonesia': 'MDN',
+    'Makassar, Indonesia': 'MKS',
+    'Yogyakarta, Indonesia': 'YOG',
+    'Bandung, Indonesia': 'BDG',
+    'Semarang, Indonesia': 'SMG',
+    'Balikpapan, Indonesia': 'BPN',
+    'Manado, Indonesia': 'MND',
+    'Lombok, Indonesia': 'LOM',
+    'Malang, Indonesia': 'MLG',
+    'Palembang, Indonesia': 'PLM',
+    'Pekanbaru, Indonesia': 'PKU',
+    'Banjarmasin, Indonesia': 'BDJ',
+    'Pontianak, Indonesia': 'PNK',
+    'Jayapura, Indonesia': 'JYP',
+    'Ambon, Indonesia': 'AMB',
+    'Ternate, Indonesia': 'TERN',
+    'Sorong, Indonesia': 'SRG',
   };
   return singkatanKota[kota] ?? kota;
 }
@@ -436,9 +442,11 @@ class TicketCard extends StatelessWidget {
   const TicketCard({Key? key, required this.tiket}) : super(key: key);
 
   // Menyimpan ID sebagai int
-  Future<void> saveTicketId(int id) async {
+  Future<void> saveTicketId(int id, String namaTransport, String kelas) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setInt('id_transport', id); // Menyimpan ID sebagai int
+    prefs.setString('nama_transport', namaTransport);
+    prefs.setString('kelas', kelas);
   }
 
   @override
@@ -765,8 +773,9 @@ class TicketCard extends StatelessWidget {
                         onPressed: () async {
                           int transportId =
                               tiket['id']; // Contoh ID transportasi
-                          await saveTicketId(
-                              transportId); // Menyimpan ID ke SharedPreferences
+                          String namaTransport = tiket['nama_transport'];
+                          String kelas = tiket['kelas'];
+                          await saveTicketId(transportId, namaTransport, kelas);
 
                           print('id: $transportId');
 
