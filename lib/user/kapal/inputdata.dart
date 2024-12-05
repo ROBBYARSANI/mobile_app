@@ -75,6 +75,7 @@ class _KapalPageState extends State<datakapal> {
   Future<void> kirimKeTransaksi(int idPemesanan) async {
     final tUser = await gettransportId();
     if (tUser == null) {
+      // Tangani jika user_id tidak ditemukan (misalnya, user belum login)
       print("Sepertinya masih ada masalah");
       return;
     }
@@ -92,10 +93,7 @@ class _KapalPageState extends State<datakapal> {
 
     if (response.statusCode == 200) {
       print("Transaksi berhasil disimpan");
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => PaymentPage()),
-      );
+      // Bisa melakukan navigasi atau aksi lain setelah berhasil
     } else {
       print("Error saat menyimpan transaksi: ${response.body}");
     }

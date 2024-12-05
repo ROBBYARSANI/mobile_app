@@ -4,14 +4,14 @@ import 'package:intl/intl.dart';
 import 'dart:convert';
 import 'package:tiket/util/config/config.dart';
 
-class Riwayat extends StatefulWidget {
-  const Riwayat({Key? key}) : super(key: key);
+class LogPesananPage extends StatefulWidget {
+  const LogPesananPage({Key? key}) : super(key: key);
 
   @override
-  _riwayatState createState() => _riwayatState();
+  _LogPesananPageState createState() => _LogPesananPageState();
 }
 
-class _riwayatState extends State<Riwayat> {
+class _LogPesananPageState extends State<LogPesananPage> {
   List<dynamic> _pesananList = [];
   bool _isLoading = true;
 
@@ -89,7 +89,7 @@ class _riwayatState extends State<Riwayat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Riwayat Pesanan')),
+      appBar: AppBar(title: const Text('Log Pesanan')),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : _pesananList.isEmpty
@@ -115,35 +115,6 @@ class _riwayatState extends State<Riwayat> {
                           'Tujuan: ${pesanan['tujuan']}\n'
                           'Tanggal: ${pesanan['waktu_keberangkatan'] != null ? DateFormat('yyyy MMM dd').format(DateTime.parse(pesanan['waktu_keberangkatan'])) : "Tanggal tidak tersedia"}\n'
                           'Harga: Rp${pesanan['total_harga']}',
-                        ),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.delete, color: Colors.red),
-                          onPressed: () {
-                            // Konfirmasi sebelum menghapus
-                            showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                title: const Text('Konfirmasi'),
-                                content: const Text(
-                                    'Apakah Anda yakin ingin menghapus data ini?'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context); // Tutup dialog
-                                    },
-                                    child: const Text('Batal'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context); // Tutup dialog
-                                      _deletePesanan(pesanan['id_transaksi']);
-                                    },
-                                    child: const Text('Hapus'),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
                         ),
                       ),
                     );
